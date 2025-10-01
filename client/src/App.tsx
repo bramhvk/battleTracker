@@ -1,20 +1,9 @@
-import React, {useEffect, useState} from "react";
-import {BrowserRouter as Router, Routes, Route, BrowserRouter} from "react-router-dom";
+import React from "react";
+import {BrowserRouter, Route, Routes} from "react-router-dom";
 import Layout from "./components/Layout";
-import {TextExtractionComponent} from "./components/OCR/TextExtractionComponent";
 import {MonsterOverview} from "./components/enemies/MonsterOverview";
 
 function App() {
-
-    // const [data, setData] = useState({characters: []})
-    //
-    // useEffect(() => {
-    //     fetch("/api/characters")
-    //         .then(res => res.json())
-    //         .then((data) => {
-    //             setData(data)
-    //         })
-    // }, [])
 
     return (
         <BrowserRouter>

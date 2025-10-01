@@ -5,6 +5,7 @@ import {CircularProgress, styled} from "@mui/material";
 import {createWorker} from "tesseract.js";
 import {OCRDialogComponent} from "./dialog/OCRDialogComponent";
 import {OCR_DIALOG_TYPE} from "./utils/properties";
+import {isEmptyImage} from "../../utils/validation";
 
 interface TextExtractionProps {
     onTextExtracted: (extractedText: string) => void;
@@ -49,6 +50,15 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
         setImageData(originalImage);
     }
 
+    const renderImages = () => {
+        if (isEmptyImage(imageData)) return (<></>)
+
+        return (
+                imageData.map((image, index) => (
+                    <img key={index} src={image} alt={`uploaded image ${index}`} style={{paddingRight: "10px"}}/>
+                )))
+    }
+
     const handleExtraction = async () => {
         setProgress(0);
         setProgressLabel('starting');
@@ -66,7 +76,7 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
 
         for (const img of imageData) {
             const {
-                data: { text },
+                data: {text},
             } = await worker.recognize(img);
             fullText += text + "\n"; // concatenate with newline
         }
@@ -93,13 +103,7 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
             />
         </Button>
 
-        {Array.isArray(imageData) ? (
-            imageData.map((image, index) => (
-                <img key={index} src={image} alt={`uploaded image ${index}`} style={{paddingRight: "10px"}}/>
-            ))
-        ) : (
-            <img src={imageData} alt="uploaded image" />
-        )}
+        {renderImages()}
 
         <Button onClick={() => setCropDialogOpen(true)}>Crop</Button>
         <Button onClick={resetImage}>reset image</Button>

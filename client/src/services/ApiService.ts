@@ -1,9 +1,4 @@
-export enum Method {
-    POST = 'POST',
-    GET = 'GET',
-    PUT = 'PUT',
-    DELETE = 'DELETE'
-}
+export type Method = "POST" | "PUT" | "GET" | "DELETE";
 
 export const apiCall = async <T>(method: Method, url: string, fallback: T): Promise<T> => {
     try {

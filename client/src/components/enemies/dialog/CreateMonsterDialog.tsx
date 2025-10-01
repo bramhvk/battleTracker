@@ -1,7 +1,8 @@
 import {Dialog, DialogActions, DialogContent, DialogTitle} from "@mui/material";
 import Button from "@mui/material/Button";
-import {StatBlockExtractor} from "../../shared/StatBlockExtractor";
+import {StatBlock} from "../../shared/StatBlock";
 import React from "react";
+import {emptyStats} from "../../../types/Stats";
 
 interface CreateEnemyDialogProps {
     open: boolean;
@@ -14,7 +15,7 @@ const CreateMonsterDialog: React.FC<CreateEnemyDialogProps> = ({open, onClose}) 
         <Dialog open={open} onClose={onClose} >
             <DialogTitle>Add new Enemy</DialogTitle>
             <DialogContent>
-                <StatBlockExtractor />
+                <StatBlock data={emptyStats} />
             </DialogContent>
             <DialogActions>
                 <Button onClick={onClose} color={"secondary"}>
