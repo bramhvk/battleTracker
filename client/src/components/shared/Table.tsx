@@ -14,14 +14,15 @@ interface Props {
 }
 
 const DataGridTable: React.FC<Props> = ({ cols, data, onClick }) => {
-    // Convert your `cols` into DataGrid column definitions
+    // Convert 'cols' into DataGrid column definitions
     // TODO: change behavior for arrays
+    // TODO: parent/children table headers
     const columns: GridColDef[] = cols.map((col) => ({
         field: col.key,
         headerName: col.label || col.key,
         flex: 1,
         renderCell: (params) => {
-            // ✅ supports nested access like "movement.speed"
+            // supports nested access like "movement.speed"
             const value = col.key.split(".").reduce(
                 (acc: any, k: string) => acc?.[k],
                 params.row

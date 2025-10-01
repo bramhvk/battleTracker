@@ -1,23 +1,20 @@
 import GenericTable from "../../shared/Table";
 import React, {useEffect, useState} from "react";
-import {Monster} from "../../../types/Monster";
+import {emptyMonster, Monster} from "../../../types/Monster";
+import Button from "@mui/material/Button";
+import {getMonsters} from "../../../services/MonsterService";
 
 interface MonsterDashboardProps {
   onClick: (monster: Monster) => void;
+  onButtonClick: () => void;
 }
 
-const MonsterDashboard: React.FC<MonsterDashboardProps> = ({onClick}) => {
+const MonsterDashboard: React.FC<MonsterDashboardProps> = ({onClick, onButtonClick}) => {
 
     const [data, setData] = useState<Monster[]>([])
+    const [noMonsterSelected, setNoMonsterSelected] = useState(true)
 
-    useEffect(() => {
-        fetch("/api/monsters/")
-            .then(res => res.json())
-            .then((data) => {
-                console.log(data)
-                setData(data)
-            })
-    }, [])
+    useEffect(() => {getMonsters().then(setData)}, [])
 
     const cols = [
         { key: "name", label: "Name" },
@@ -32,11 +29,16 @@ const MonsterDashboard: React.FC<MonsterDashboardProps> = ({onClick}) => {
     ];
 
     const handleTableRowClick = (id: string) => {
-        onClick(data.find(data => data._id === id) as Monster)
+        onClick(data.find(data => data._id === id) as Monster);
+        setNoMonsterSelected(false);
     }
 
     return (
-        <GenericTable data={data} cols={cols} onClick={handleTableRowClick} />
+        <>
+            <GenericTable data={data} cols={cols} onClick={handleTableRowClick} />
+            <Button onClick={() => {onClick(emptyMonster); onButtonClick();}}>Add Monster</Button>
+            <Button onClick={onButtonClick} sx={{ display: noMonsterSelected ? "none" : "inline-flex" }}>Edit Monster</Button>
+        </>
     );
 }
 

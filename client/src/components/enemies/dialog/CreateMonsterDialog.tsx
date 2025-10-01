@@ -6,17 +6,9 @@ import React from "react";
 interface CreateEnemyDialogProps {
     open: boolean;
     onClose: () => void;
-    // onConfirm: (imageData: string[]) => void;
 }
 
 const CreateMonsterDialog: React.FC<CreateEnemyDialogProps> = ({open, onClose}) => {
-
-    // const handleConfirm = () => {
-    //     if (tempResult !== null) {
-    //         onConfirm(tempResult);
-    //     }
-    //     onClose();
-    // }
 
     return (
         <Dialog open={open} onClose={onClose} >

@@ -9,7 +9,7 @@ interface ContrastImageProps {
 
 const ContrastImageComponent: React.FC<ContrastImageProps> = ({
                                                          imageData,
-                                                         initialContrast = 0,
+                                                         initialContrast = 60,
                                                          initialThreshold = 128,
                                                          onDone,
                                                      }) => {
