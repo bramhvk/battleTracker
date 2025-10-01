@@ -1,4 +1,4 @@
-import { Request, Response } from "express";
+import {Request, Response} from "express";
 import Monster from "../models/monster";
 
 export const getMonsters = async (_req: Request, res: Response) => {
@@ -9,7 +9,7 @@ export const getMonsters = async (_req: Request, res: Response) => {
 export const getMonsterById = async (req: Request, res: Response) => {
     try {
         const monster = await Monster.findById(req.params.id);
-        if (!monster) return res.status(404).json({ error: "Monster not found" });
+        if (!monster) return res.status(404).json({ error: "Could not find monster by ID: " + req.params.id });
         res.json(monster);
     } catch (err) {
         res.status(500).json({ error: err });
@@ -30,7 +30,7 @@ export const updateMonster = async (req: Request, res: Response) => {
         const monster = await Monster.findByIdAndUpdate(req.params.id, req.body, {
             new: true,
         });
-        if (!monster) return res.status(404).json({ error: "Monster not found" });
+        if (!monster) return res.status(404).json({ error: "Could not find monster by ID: " + req.params.id });
         res.json(monster);
     } catch (err) {
         res.status(500).json({ error: err });
@@ -40,7 +40,7 @@ export const updateMonster = async (req: Request, res: Response) => {
 export const deleteMonster = async (req: Request, res: Response) => {
     try {
         const monster = await Monster.findByIdAndDelete(req.params.id);
-        if (!monster) return res.status(404).json({ error: "Monster not found" });
+        if (!monster) return res.status(404).json({ error: "Could not find monster by ID: " + req.params.id });
         res.json({ message: "Monster deleted" });
     } catch (err) {
         res.status(500).json({ error: err });

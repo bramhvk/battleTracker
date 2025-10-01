@@ -1,7 +1,6 @@
 import React, {useState} from "react";
 import MonsterDashboard from "./pages/MonsterDashboard";
-import CreateEditMonster from "./CreateEditMonster";
-import {emptyMonster} from "../../types/Monster";
+import CreateEditMonster from "./pages/CreateEditMonster";
 
 enum ComponentState {
     OVERVIEW,
@@ -15,16 +14,16 @@ interface EnemyDashboardProps {
 const MonsterOverview: React.FunctionComponent<EnemyDashboardProps> = () => {
 
     const [state, setState] = useState(ComponentState.OVERVIEW)
-    const [selectedMonster, setSelectedMonster] = useState(emptyMonster)
+    const [selectedMonsterId, setSelectedMonsterId] = useState('')
 
     return (
         <div>
             {(() => {
                 switch (state) {
                     case ComponentState.OVERVIEW:
-                        return <MonsterDashboard onClick={setSelectedMonster} onButtonClick={() => setState(ComponentState.EDIT)} />;
+                        return <MonsterDashboard onClick={setSelectedMonsterId} onButtonClick={() => setState(ComponentState.EDIT)} />;
                     case ComponentState.EDIT:
-                        return <CreateEditMonster monster={selectedMonster}/>
+                        return <CreateEditMonster id={selectedMonsterId}/>
                     default:
                         return null;
                 }

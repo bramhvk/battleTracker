@@ -1,4 +1,4 @@
-import mongoose, {Schema, Document} from "mongoose";
+import mongoose, {Document, Schema} from "mongoose";
 import StatsSchema, {IStats} from "./stats";
 import {IMovement} from "./movement";
 
@@ -25,7 +25,7 @@ export interface IMonster extends Document {
 
 
 const MonsterSchema: Schema = new Schema({
-    _id: {type: String, required: true},
+    _id: {type: mongoose.Types.ObjectId, required: true},
     name: { type: String, required: true },
     ac: { type: Number, required: true },
     hitDice: { type: Number, required: true },
