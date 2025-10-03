@@ -1,13 +1,14 @@
-import {Monster} from "../../../types/Monster";
+import {emptyMonster, genericInfoFrom, Monster} from "../../../types/Monster";
 import React, {useEffect, useState} from "react";
 import CreateMonsterDialog from "../dialog/CreateMonsterDialog";
 import Button from "@mui/material/Button";
 import {getMonsterById} from "../../../services/MonsterService";
 import {StatBlock} from "../../shared/StatBlock";
-import {TextExtractionComponent} from "../../OCR/TextExtractionComponent";
+import {TextExtractionComponent} from "../../shared/TextExtractionComponent";
+import {MonsterInfo} from "../../shared/MonsterInfo";
 
 interface CreateEditMonsterProps {
-    id: string;
+    id?: string;
 }
 
 const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
@@ -15,9 +16,7 @@ const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
     const [createMonsterDialog, setCreateMonsterDialog] = useState(false)
     const [extractedText, setExtractedText] = useState('')
 
-    useEffect(() => {
-        getMonsterById(id).then(setData);
-    }, [])
+    useEffect(() => { id ? getMonsterById(id).then(setData) : setData(emptyMonster);}, [id])
 
     //wait for data to be loaded before the first render
     if (!data) return null;
@@ -27,7 +26,9 @@ const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
             {id}
             {JSON.stringify(data)}
             <TextExtractionComponent onTextExtracted={setExtractedText}/>
+            <MonsterInfo data={genericInfoFrom(data)}/>
             <StatBlock data={data.stats} providedText={extractedText}/>
+            <StatBlock data={data.savingThrows} />
             <Button onClick={() => setCreateMonsterDialog(true)}>Scan Stat block</Button>
             <CreateMonsterDialog open={createMonsterDialog} onClose={() => setCreateMonsterDialog(false)} />
         </>

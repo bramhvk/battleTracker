@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {parseStats} from "../../utils/OCR/TextParserDnd5e";
-import {TextExtractionComponent} from "../OCR/TextExtractionComponent";
+import {TextExtractionComponent} from "./TextExtractionComponent";
 import {FormControl, FormLabel, Input} from "@mui/material";
 import {emptyStats, Stats} from "../../types/Stats";
 import {isEmpty} from "../../utils/validation";

@@ -1,8 +1,6 @@
 import {Size} from "./Size";
 import {emptyStats, SavingThrows, Stats} from "./Stats";
 import {DamageType} from "./DamageType";
-import {Language} from "./Languages";
-import {Attack} from "./Attack";
 import {emptyMovement, Movement} from "./Movement";
 
 export interface Monster {
@@ -20,6 +18,24 @@ export interface Monster {
     // cr: number;
     // abilities: string[];
     // attacks: Attack[]
+}
+
+export interface GenericMonsterInfo {
+    name: string;
+    ac: number;
+    hitDice: number;
+    size: Size,
+    movement: Movement;
+}
+
+export const genericInfoFrom= (monster: Monster) => {
+    return {
+        name: monster.name,
+        ac: monster.ac,
+        hitDice: monster.hitDice,
+        size: monster.size,
+        movement: monster.movement,
+    } as GenericMonsterInfo;
 }
 
 export const isEmpty = (monster: Monster): boolean => {

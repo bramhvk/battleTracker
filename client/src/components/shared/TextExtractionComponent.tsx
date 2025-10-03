@@ -3,8 +3,8 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {CircularProgress, styled} from "@mui/material";
 import {createWorker} from "tesseract.js";
-import {OCRDialogComponent} from "./dialog/OCRDialogComponent";
-import {OCR_DIALOG_TYPE} from "./utils/properties";
+import {OCRDialogComponent} from "../OCR/dialog/OCRDialogComponent";
+import {OCR_DIALOG_TYPE} from "../OCR/utils/properties";
 import {isEmptyImage} from "../../utils/validation";
 
 interface TextExtractionProps {
