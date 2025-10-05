@@ -1,15 +1,11 @@
 import mongoose, {Document, Schema} from "mongoose";
 import StatsSchema, {IStats} from "./stats";
-import {IMovement} from "./movement";
+import {IMonsterInfo} from "./monsterInfo";
 
 
 export interface IMonster extends Document {
     _id: mongoose.Types.ObjectId;
-    name: string;
-    ac: number;
-    hitDice: number;
-    size: number;
-    movement: IMovement;
+    info: IMonsterInfo;
     stats: IStats;
     savingThrows?: IStats;
     // skills: string[];
@@ -26,15 +22,17 @@ export interface IMonster extends Document {
 
 const MonsterSchema: Schema = new Schema({
     _id: {type: mongoose.Types.ObjectId, required: true},
-    name: { type: String, required: true },
-    ac: { type: Number, required: true },
-    hitDice: { type: Number, required: true },
-    size: { type: Number, required: true },
-    movement: {
-        speed: { type: Number, required: false },
-        fly: { type: Number, required: false },
-        burrow: { type: Number, required: false },
-        swim: { type: Number, required: false },
+    info: {
+        name: { type: String, required: true },
+        ac: { type: Number, required: true },
+        hitDice: { type: Number, required: true },
+        size: { type: Number, required: true },
+        movement: {
+            speed: { type: Number, required: false },
+            fly: { type: Number, required: false },
+            burrow: { type: Number, required: false },
+            swim: { type: Number, required: false },
+        },
     },
     stats: {type: StatsSchema, required: true },
     // skills: { type: [String], default: [] },

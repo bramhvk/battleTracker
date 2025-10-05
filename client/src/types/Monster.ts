@@ -5,11 +5,7 @@ import {emptyMovement, Movement} from "./Movement";
 
 export interface Monster {
     _id: string;
-    name: string;
-    ac: number;
-    hitDice: number;
-    size: Size,
-    movement: Movement;
+    info: GenericMonsterInfo;
     stats: Stats;
     savingThrows: SavingThrows;
     immunities: DamageType[];
@@ -24,18 +20,8 @@ export interface GenericMonsterInfo {
     name: string;
     ac: number;
     hitDice: number;
-    size: Size,
     movement: Movement;
-}
-
-export const genericInfoFrom= (monster: Monster) => {
-    return {
-        name: monster.name,
-        ac: monster.ac,
-        hitDice: monster.hitDice,
-        size: monster.size,
-        movement: monster.movement,
-    } as GenericMonsterInfo;
+    size: Size,
 }
 
 export const isEmpty = (monster: Monster): boolean => {
@@ -43,13 +29,17 @@ export const isEmpty = (monster: Monster): boolean => {
     return JSON.stringify(monster) === JSON.stringify(emptyMonster);
 }
 
-export const emptyMonster: Monster = {
-    _id: "",
+export const emptyGenericMonsterInfo: GenericMonsterInfo = {
     name: "",
     ac: 0,
     hitDice: 0,
     movement: emptyMovement,
-    size: 4,
+    size: Size.MEDIUM,
+}
+
+export const emptyMonster: Monster = {
+    _id: "",
+    info: emptyGenericMonsterInfo,
     stats: emptyStats,
     savingThrows: emptyStats,
     immunities: [],

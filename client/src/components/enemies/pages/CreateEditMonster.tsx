@@ -1,4 +1,4 @@
-import {emptyMonster, genericInfoFrom, Monster} from "../../../types/Monster";
+import {emptyMonster, Monster} from "../../../types/Monster";
 import React, {useEffect, useState} from "react";
 import CreateMonsterDialog from "../dialog/CreateMonsterDialog";
 import Button from "@mui/material/Button";
@@ -26,7 +26,7 @@ const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
             {id}
             {JSON.stringify(data)}
             <TextExtractionComponent onTextExtracted={setExtractedText}/>
-            <MonsterInfo data={genericInfoFrom(data)}/>
+            <MonsterInfo data={data.info}/>
             <StatBlock data={data.stats} providedText={extractedText}/>
             <StatBlock data={data.savingThrows} />
             <Button onClick={() => setCreateMonsterDialog(true)}>Scan Stat block</Button>
