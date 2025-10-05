@@ -1,4 +1,9 @@
 import {emptyStats, Stats} from "../../types/Stats";
+import {emptyMonster, Monster} from "../../types/Monster";
+
+export const parseMonster = (statBlock: string): Monster => {
+    return emptyMonster;
+}
 
 export const parseStats = (stats: string): Stats => {
     // first 2 numbers after a whitespace
