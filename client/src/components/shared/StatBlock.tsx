@@ -3,19 +3,19 @@ import {parseStats} from "../../features/parsers/TextParserDnd5e";
 import {TextExtractionComponent} from "./TextExtractionComponent";
 import {FormControl, FormLabel, Input} from "@mui/material";
 import {emptyStats, Stats} from "../../types/Stats";
-import {isEmpty} from "../../utils/validation";
+import {isArrayEmpty} from "../../utils/validation";
 
 interface StatBlockProps {
     data: Stats;
-    providedText?: string;
+    providedText?: string[];
 }
 
 const StatBlock: React.FC<StatBlockProps> = ({data, providedText}) => {
 
     const [stats, setStats] = useState(emptyStats)
-    const [extractedText, setExtractedText] = useState<string>('')
+    const [extractedText, setExtractedText] = useState<string[]>([""])
 
-    const processStats = (extractedText: string) => {
+    const processStats = (extractedText: string[]) => {
         setExtractedText(extractedText)
         setStats(parseStats(extractedText))
     }
@@ -24,7 +24,7 @@ const StatBlock: React.FC<StatBlockProps> = ({data, providedText}) => {
     useEffect(() => {
         console.log(data, providedText);
         setStats(data);
-        providedText && !isEmpty(providedText) && setExtractedText(providedText)
+        providedText && !isArrayEmpty(providedText) && setExtractedText(providedText)
     }, [])
 
     return (

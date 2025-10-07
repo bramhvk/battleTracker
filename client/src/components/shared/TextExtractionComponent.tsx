@@ -5,10 +5,10 @@ import {CircularProgress, styled} from "@mui/material";
 import {createWorker} from "tesseract.js";
 import {OCRDialogComponent} from "../OCR/dialog/OCRDialogComponent";
 import {OCR_DIALOG_TYPE} from "../OCR/utils/properties";
-import {isEmptyImage} from "../../utils/validation";
+import {isImageEmpty} from "../../utils/validation";
 
 interface TextExtractionProps {
-    onTextExtracted: (extractedText: string) => void;
+    onTextExtracted: (extractedText: string[]) => void;
 }
 
 const VisuallyHiddenInput = styled('input')({
@@ -28,7 +28,7 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
     const [originalImage, setOriginalImage] = useState<string[]>([''])
     const [progress, setProgress] = useState(0);
     const [progressLabel, setProgressLabel] = useState('idle');
-    const [ocrResult, setOcrResult] = useState('');
+    const [ocrResult, setOcrResult] = useState(['']);
 
     const [cropDialogOpen, setCropDialogOpen] = useState<boolean>(false);
     const [splitDialogOpen, setSplitDialogOpen] = useState<boolean>(false);
@@ -51,7 +51,7 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
     }
 
     const renderImages = () => {
-        if (isEmptyImage(imageData)) return (<></>)
+        if (isImageEmpty(imageData)) return (<></>)
 
         return (
                 imageData.map((image, index) => (
@@ -72,17 +72,17 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
             }
         });
 
-        let fullText = "";
+        let data: string[] = [""];
 
         for (const img of imageData) {
             const {
                 data: {text},
             } = await worker.recognize(img);
-            fullText += text + "\n"; // concatenate with newline
+            const x = text.split(/\r?\n|\r\n/g)
+            data.push(...text.split(/\r?\n|\r\n/g));
         }
-        setOcrResult(fullText);
-        console.log(fullText, fullText.split(/\r?\n|\r\n/g));
-        onTextExtracted(fullText)
+        setOcrResult(data);
+        onTextExtracted(data)
         await worker.terminate();
     };
 
