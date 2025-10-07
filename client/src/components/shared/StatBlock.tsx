@@ -1,9 +1,9 @@
 import {useEffect, useState} from "react";
-import {parseStats} from "../../features/parsers/TextParserDnd5e";
 import {TextExtractionComponent} from "./TextExtractionComponent";
 import {FormControl, FormLabel, Input} from "@mui/material";
 import {emptyStats, Stats} from "../../types/Stats";
 import {isArrayEmpty} from "../../utils/validation";
+import {createStatsFrom} from "../../features/parsers/5e/StatsParsers";
 
 interface StatBlockProps {
     data: Stats;
@@ -17,7 +17,7 @@ const StatBlock: React.FC<StatBlockProps> = ({data, providedText}) => {
 
     const processStats = (extractedText: string[]) => {
         setExtractedText(extractedText)
-        setStats(parseStats(extractedText))
+        setStats(createStatsFrom(extractedText))
     }
 
     // set the data on page load

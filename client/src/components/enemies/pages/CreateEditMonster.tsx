@@ -6,7 +6,7 @@ import {getMonsterById} from "../../../services/MonsterService";
 import {StatBlock} from "../../shared/StatBlock";
 import {TextExtractionComponent} from "../../shared/TextExtractionComponent";
 import {MonsterInfo} from "../../shared/MonsterInfo";
-import {parseMonster} from "../../../features/parsers/TextParserDnd5e";
+import {createMonsterFrom} from "../../../features/parsers/5e/MonsterParser";
 
 interface CreateEditMonsterProps {
     id?: string;
@@ -20,7 +20,7 @@ const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
     useEffect(() => { id ? getMonsterById(id).then(setData) : setData(emptyMonster);}, [id])
 
     const handleExtractedText = (extractedText: string[]) => {
-        setData(parseMonster(extractedText))
+        setData(createMonsterFrom(extractedText))
     }
 
     //wait for data to be loaded before the first render
