@@ -19,6 +19,7 @@ export interface Monster {
 export interface GenericMonsterInfo {
     name: string;
     ac: number;
+    hitPoints: number;
     hitDice: number;
     movement: Movement;
     size: Size,
@@ -33,6 +34,7 @@ export const emptyGenericMonsterInfo: GenericMonsterInfo = {
     name: "",
     ac: 0,
     hitDice: 0,
+    hitPoints: 0,
     movement: emptyMovement,
     size: Size.MEDIUM,
 }

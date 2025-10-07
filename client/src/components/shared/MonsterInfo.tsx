@@ -1,8 +1,6 @@
-import {emptyMovement} from "../../types/Movement";
 import {FormControl, FormLabel, Input} from "@mui/material";
 import {useEffect, useState} from "react";
-import {GenericMonsterInfo} from "../../types/Monster";
-import {Size} from "../../types/Size";
+import {emptyGenericMonsterInfo, GenericMonsterInfo} from "../../types/Monster";
 
 
 interface MonsterInfoProps {
@@ -12,13 +10,7 @@ interface MonsterInfoProps {
 
 export const MonsterInfo: React.FC<MonsterInfoProps> = ({data, providedText}) => {
 
-    const [genericMonsterInfo, setGenericMonsterInfo] = useState({
-        name: "",
-        ac: 0,
-        hitDice: 0,
-        size: Size.MEDIUM,
-        movement: emptyMovement,
-    } as GenericMonsterInfo);
+    const [genericMonsterInfo, setGenericMonsterInfo] = useState(emptyGenericMonsterInfo);
 
     useEffect(() => { setGenericMonsterInfo(data); }, [data]);
 
