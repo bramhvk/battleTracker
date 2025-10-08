@@ -23,10 +23,12 @@ export const emptyParserMatch: ParserMatch = {
     match: 0,
 }
 
+export const matcherThreshold = 0.6;
 
+export const isBelowThreshold = (parserMatch: ParserMatch) => { return matcherThreshold > parserMatch.match; };
 
 export const findByKeyword = (keyword: string, parserMatches: ParserMatch[]) => {
-    return parserMatches.find(pm => pm.keyword.value === keyword) ?? emptyParserMatch;
+    return parserMatches.find(pm => pm.keyword.value === keyword || pm.keyword.mappedValue === keyword) ?? emptyParserMatch;
 }
 
 export const findBestMatchFor = (keyword: KeywordMap, matcher: CmpStr, testArrays: string[], splitKeyword: boolean): ParserMatch => {
@@ -38,6 +40,7 @@ export const findBestMatchFor = (keyword: KeywordMap, matcher: CmpStr, testArray
     testArrays.forEach((text, index) => {
         const res = matcher.test(text.trim().split(/\s+/).slice(0, keywordLength).join(" "), keyword.value) as CmpStrResult;
         if (res.match > bestMatchScore) {
+            // console.log(text, bestMatchScore, bestMatchIndex)
             bestMatchScore = res.match;
             bestMatchIndex = index;
         }

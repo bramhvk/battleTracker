@@ -1,32 +1,23 @@
-import {emptyStats, Stats} from "../../../types/Stats";
-import {findStatBlockHeader} from "./GenericMonsterInfoParser";
+import {emptyStats, statKeys, Stats} from "../../../types/Stats";
 import {defaultMatcher} from "../Matcher";
+import {CmpStr, MetricRaw} from "cmpstr";
+import {findBestMatchFor} from "../ParserHelper";
+import {MAPPING_STAT_BLOCK_HEADER} from "./mapping/5eMapping";
 
 export const createStatsFrom = (statBlock: string[]): Stats => {
     const matcher = defaultMatcher();
-    const res = findStatBlockHeader(statBlock, matcher);
-    const stats:string  = statBlock[res.index]
-    // first 2 numbers after a whitespace
-    const statsArray = stats.match(/\s[0-9]{1,2}/g);
+    // stat numbers are always the line after the header
+    const statBlockIndex = findStatBlockHeader(statBlock, matcher).index + 1;
+    const stats: string[] = statBlock[statBlockIndex].split(" ").filter(s => s.match(/^\d{1,2}/))
 
-    if (statsArray != null && statsArray.length > 1) {
-        const stats = statsArray.map((statString) => {
-            // remove whitespace
-            statString = statString.trim()
-            // should always work due to regex
-            let stat = Number(statString)
-            return stat < 30 ? stat : Number(Array.from(statString)[0])
-        })
+    const result = emptyStats;
 
-        return {
-            str: stats[0],
-            dex: stats[1],
-            con: stats[2],
-            int: stats[3],
-            wis: stats[4],
-            cha: stats[5],
-        }
-    } else {
-        return emptyStats;
-    }
+    stats.forEach((s, i) => {
+        const extractedValue = Number(s.trim().match(/[0-9]{1,2}/g)?.[0])
+        result[statKeys[i] as keyof Stats] = isNaN(extractedValue) ? 0 : extractedValue;
+    })
+
+    return result;
 }
+
+export const findStatBlockHeader = (statBlock: string[], matcher: CmpStr<MetricRaw>) => findBestMatchFor(MAPPING_STAT_BLOCK_HEADER, matcher, statBlock, false);

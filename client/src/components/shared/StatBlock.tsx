@@ -22,10 +22,9 @@ const StatBlock: React.FC<StatBlockProps> = ({data, providedText}) => {
 
     // set the data on page load
     useEffect(() => {
-        console.log(data, providedText);
         setStats(data);
         providedText && !isArrayEmpty(providedText) && setExtractedText(providedText)
-    }, [])
+    }, [data])
 
     return (
         <div>

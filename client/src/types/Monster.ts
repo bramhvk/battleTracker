@@ -1,5 +1,5 @@
 import {Size} from "./Size";
-import {emptyStats, SavingThrows, Stats} from "./Stats";
+import {emptySavingThrows, emptyStats, SavingThrows, Stats} from "./Stats";
 import {DamageType} from "./DamageType";
 import {emptyMovement, Movement} from "./Movement";
 
@@ -30,7 +30,7 @@ export const isEmpty = (monster: Monster): boolean => {
     return JSON.stringify(monster) === JSON.stringify(emptyMonster);
 }
 
-export const emptyGenericMonsterInfo: GenericMonsterInfo = {
+const emptyGenericMonsterInfoObject: GenericMonsterInfo = {
     name: "",
     ac: 0,
     hitDice: 0,
@@ -39,14 +39,18 @@ export const emptyGenericMonsterInfo: GenericMonsterInfo = {
     size: Size.MEDIUM,
 }
 
-export const emptyMonster: Monster = {
+export const emptyGenericMonsterInfo: GenericMonsterInfo = {...emptyGenericMonsterInfoObject}
+
+const emptyMonsterObject: Monster = {
     _id: "",
     info: emptyGenericMonsterInfo,
     stats: emptyStats,
-    savingThrows: emptyStats,
+    savingThrows: emptySavingThrows,
     immunities: [],
     resistances: [],
 }
+
+export const emptyMonster: Monster = {...emptyMonsterObject}
 
 
 

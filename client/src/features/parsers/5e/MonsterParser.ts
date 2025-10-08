@@ -1,5 +1,7 @@
 import {emptyMonster, Monster} from "../../../types/Monster";
 import {createGenericMonsterInfoFrom} from "./GenericMonsterInfoParser";
+import {createStatsFrom} from "./StatsParsers";
+import {isStringEmpty} from "../../../utils/validation";
 
 const genericAbilities = [
     "saving throws",
@@ -13,9 +15,14 @@ const genericAbilities = [
 ];
 
 export const createMonsterFrom = (statBlock: string[]): Monster => {
-    return {
+    const filteredStatBlock = statBlock.filter(s => !isStringEmpty(s))
+
+    console.log("given stat block", filteredStatBlock);
+    const monster =  {
         ...emptyMonster,
-        info: createGenericMonsterInfoFrom(statBlock),
-        // stats: parseStats(statBlock),
+        info: createGenericMonsterInfoFrom(filteredStatBlock),
+        stats: createStatsFrom(filteredStatBlock),
     };
+    console.log("produced", monster);
+    return monster
 }

@@ -15,6 +15,11 @@ export const MAPPING_HIT_POINTS: KeywordMap = {
     mappedValue: "hitPoints"
 }
 
+export const MAPPING_HIT_DICE: KeywordMap = {
+    value: "hit points",
+    mappedValue: "hitDice"
+}
+
 export const MAPPING_SPEED: KeywordMap = {
     value: "speed",
     mappedValue: "movement"
@@ -30,4 +35,4 @@ export const MAPPING_STATS: KeywordMap = {
     mappedValue: "stats",
 }
 
-export const GenericMonsterInfoKeywords: KeywordMap[] = [MAPPING_SPEED, MAPPING_AC, MAPPING_HIT_POINTS]
+export const GenericMonsterInfoKeywords: KeywordMap[] = [MAPPING_SPEED, MAPPING_AC, MAPPING_HIT_POINTS, MAPPING_HIT_DICE]
