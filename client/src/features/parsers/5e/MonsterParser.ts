@@ -2,6 +2,9 @@ import {emptyMonster, Monster} from "../../../types/Monster";
 import {createGenericMonsterInfoFrom} from "./GenericMonsterInfoParser";
 import {createStatsFrom} from "./StatsParsers";
 import {isStringEmpty} from "../../../utils/validation";
+import {createProficienciesFrom} from "./ProficiencyParser";
+import {createSensesFrom} from "./SensesParser";
+import {createResistancesFrom} from "./ResistanceParser";
 
 const genericAbilities = [
     "saving throws",
@@ -14,15 +17,16 @@ const genericAbilities = [
     "challenge"
 ];
 
-export const createMonsterFrom = (statBlock: string[]): Monster => {
-    const filteredStatBlock = statBlock.filter(s => !isStringEmpty(s))
+export const createMonsterFrom = (data: string[]): Monster => {
+    const statBlock = [...data.filter(s => !isStringEmpty(s))]
 
-    console.log("given stat block", filteredStatBlock);
-    const monster =  {
+    return {
         ...emptyMonster,
-        info: createGenericMonsterInfoFrom(filteredStatBlock),
-        stats: createStatsFrom(filteredStatBlock),
+        info: createGenericMonsterInfoFrom([...statBlock]),
+        stats: createStatsFrom([...statBlock]),
+        proficiencies: createProficienciesFrom([...statBlock]),
+        senses: createSensesFrom([...statBlock]),
+        resistances: createResistancesFrom([...statBlock])
     };
-    console.log("produced", monster);
-    return monster
 }
+

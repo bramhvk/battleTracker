@@ -1,3 +1,5 @@
+export const damageTypes = ["acid", "cold", "fire", "force", "lighting", "necrotic", "poison", "psychic", "radiant", "thunder", "piercing", "slashing", "bludgeoning", "non_magical",];
+
 export enum DamageType {
     ACID = "acid",
     COLD = "cold",
@@ -12,7 +14,17 @@ export enum DamageType {
     PIERCING = "piercing",
     SLASHING = "slashing",
     BLUDGEONING = "bludgeoning",
-    M_PIERCING = "mpiercing",
-    M_SLASHING = "mslinging",
-    M_BLUDGEONING = "mbludgeoning",
+    NON_MAGICAL = "non_magical",
+}
+
+export const getDamageTypeFrom = (key: string) => {
+    if (key === undefined) return DamageType.ACID;
+
+    const normalized = key.trim().toUpperCase();
+
+    if (normalized in DamageType) {
+        return DamageType[normalized as keyof typeof DamageType];
+    }
+
+    return DamageType.ACID;
 }

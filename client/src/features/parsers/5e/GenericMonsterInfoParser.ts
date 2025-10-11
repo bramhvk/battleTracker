@@ -1,6 +1,7 @@
 import {CmpStr} from "cmpstr";
 import {emptyGenericMonsterInfo, GenericMonsterInfo} from "../../../types/Monster";
 import {
+    emptyParserMatch,
     findBestMatchFor,
     findBestMatchInArray,
     findByKeyword,
@@ -25,11 +26,8 @@ export const createGenericMonsterInfoFrom = (statBlock: string[]): GenericMonste
 
     //the size is always before any of the generic info, so we check less lines
     parserResult.push({...determineSize(statBlock, matcher, parserResult)})
-
-    //the name is always the line before the size
-    const sizeIndex = findByKeyword("size", parserResult).index;
-    parserResult.push({keyword: MAPPING_NAME, match: 1, index: (sizeIndex - 1)})
-
+    parserResult.push({keyword: MAPPING_NAME, match: 1, index: determineNameIndex(parserResult)})
+    // parserResult.push() todo: push challenge rating with backups
     parserResult.forEach((res) => {
         const key = res.keyword.mappedValue as keyof GenericMonsterInfo
         (parsedGenericInfo[key] as any) = parseGenericMonsterInfo[key](statBlock[res.index], res);
@@ -39,7 +37,8 @@ export const createGenericMonsterInfoFrom = (statBlock: string[]): GenericMonste
 }
 
 const determineSize = (statBlock: string[], matcher: CmpStr, parserResult: ParserMatch[]) => {
-    const result = findBestMatchInArray(getEnumKeys(Size).map((sizeKey) => ({value: sizeKey, mappedValue: "size"} as KeywordMap)), matcher, statBlock.slice(0, parserResult[0].index), true)
+    const enumSizeKeys = getEnumKeys(Size).map((sizeKey) => ({value: sizeKey, mappedValue: "size"} as KeywordMap));
+    const result = findBestMatchInArray(enumSizeKeys, matcher, statBlock.slice(0, Math.max(...parserResult.map(res => res.index)) + 1), true, true);
 
     if (isBelowThreshold(result)) {
 
@@ -50,16 +49,33 @@ const determineSize = (statBlock: string[], matcher: CmpStr, parserResult: Parse
             //fallback to the value of the hit die in the HP section
             //assume the index is 2 away from HP, since we couldn't find the size
             return {
+                ...emptyParserMatch,
                 keyword: {
                     value: Size[hitDiceAmount],
                     mappedValue: "size"
                 } as KeywordMap,
-                index: hitDiceMatch.index - 2,
-                match: 1,
             } as ParserMatch
 
         }
     }
 
     return result;
+}
+
+const determineNameIndex = (parserResult: ParserMatch[]): number => {
+    const sizeIndex = findByKeyword("size", parserResult).index;
+
+    //should normally be the line before size
+    if (sizeIndex > 0) {
+        return sizeIndex - 1;
+    }
+
+    //next line if size isn't present
+    const acIndex = findByKeyword("ac", parserResult).index;
+    if (acIndex > 0) {
+        return acIndex - 1;
+    }
+
+    //hope it is the first line
+    return 0;
 }

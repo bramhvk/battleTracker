@@ -35,6 +35,7 @@ const MonsterSchema: Schema = new Schema({
         },
     },
     stats: {type: StatsSchema, required: true },
+    proficiencies: {type: [String], required: true },
     // skills: { type: [String], default: [] },
     // senses: { type: [String], default: [] },
     savingThrows: {type: StatsSchema, required: false},

@@ -33,7 +33,7 @@ const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
             <TextExtractionComponent onTextExtracted={handleExtractedText}/>
             <MonsterInfo data={data.info} />
             <StatBlock data={data.stats} />
-            <StatBlock data={data.savingThrows} />
+            {/*<StatBlock data={data.savingThrows} />*/}
             <Button onClick={() => setCreateMonsterDialog(true)}>Scan Stat block</Button>
             <CreateMonsterDialog open={createMonsterDialog} onClose={() => setCreateMonsterDialog(false)} />
         </>

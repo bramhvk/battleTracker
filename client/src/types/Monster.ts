@@ -1,15 +1,19 @@
 import {Size} from "./Size";
-import {emptySavingThrows, emptyStats, SavingThrows, Stats} from "./Stats";
+import {emptyStats, Stats} from "./Stats";
 import {DamageType} from "./DamageType";
 import {emptyMovement, Movement} from "./Movement";
+import {emptySenses, Senses} from "./Senses";
+import {Condition} from "./Condition";
 
 export interface Monster {
     _id: string;
     info: GenericMonsterInfo;
     stats: Stats;
-    savingThrows: SavingThrows;
+    proficiencies: string[];
+    senses: Senses;
     immunities: DamageType[];
     resistances: DamageType[];
+    conditions: Condition[];
     // languages: Language[];
     // cr: number;
     // abilities: string[];
@@ -23,6 +27,7 @@ export interface GenericMonsterInfo {
     hitDice: number;
     movement: Movement;
     size: Size,
+    cr: number;
 }
 
 export const isEmpty = (monster: Monster): boolean => {
@@ -37,6 +42,7 @@ const emptyGenericMonsterInfoObject: GenericMonsterInfo = {
     hitPoints: 0,
     movement: emptyMovement,
     size: Size.MEDIUM,
+    cr: 0,
 }
 
 export const emptyGenericMonsterInfo: GenericMonsterInfo = {...emptyGenericMonsterInfoObject}
@@ -45,9 +51,11 @@ const emptyMonsterObject: Monster = {
     _id: "",
     info: emptyGenericMonsterInfo,
     stats: emptyStats,
-    savingThrows: emptySavingThrows,
+    proficiencies: [],
+    senses: emptySenses,
     immunities: [],
     resistances: [],
+    conditions: [],
 }
 
 export const emptyMonster: Monster = {...emptyMonsterObject}

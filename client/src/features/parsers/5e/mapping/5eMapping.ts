@@ -35,4 +35,40 @@ export const MAPPING_STATS: KeywordMap = {
     mappedValue: "stats",
 }
 
-export const GenericMonsterInfoKeywords: KeywordMap[] = [MAPPING_SPEED, MAPPING_AC, MAPPING_HIT_POINTS, MAPPING_HIT_DICE]
+export const MAPPING_SAVING_THROWS: KeywordMap = {
+    value: "Saving Throws",
+    mappedValue: "proficiencies"
+}
+
+export const MAPPING_SKILLS: KeywordMap = {
+    value: "Skills",
+    mappedValue: "proficiencies",
+}
+
+export const MAPPING_CR: KeywordMap = {
+    value: "Challenge",
+    mappedValue: "cr"
+}
+
+export const MAPPING_SENSES: KeywordMap = {
+    value: "Senses",
+    mappedValue: "senses",
+}
+
+export const MAPPING_RESISTANCES = {
+    value: "Damage resistances",
+    mappedValue: "resistances"
+}
+
+export const MAPPING_IMMUNITIES = {
+    value: "immunities",
+    mappedValue: "immunities"
+}
+
+export const MAPPING_CONDITIONS = {
+    value: "conditions",
+    mappedValue: "conditions"
+}
+
+export const GenericMonsterInfoKeywords: KeywordMap[] = [MAPPING_SPEED, MAPPING_AC, MAPPING_HIT_POINTS, MAPPING_HIT_DICE];
+export const ProficiencyKeywords: KeywordMap[] = [MAPPING_SAVING_THROWS, MAPPING_SKILLS];

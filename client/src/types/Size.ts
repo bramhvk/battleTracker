@@ -10,6 +10,8 @@ export enum Size {
 }
 
 export const getSizeFromString = (key: string) => {
+    if (key === undefined) return Size.MEDIUM;
+
     const normalized = key.trim().toUpperCase();
 
     if (normalized in Size) {
