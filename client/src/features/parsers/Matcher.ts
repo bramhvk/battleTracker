@@ -17,6 +17,8 @@ export const doesStringContainValue = (test: string, find: string, filter = (val
         .split(/\s+/)
         .filter(filter)
         .map((value: string) => matcher.test(value, find) as CmpStrResult)
+
+
         .reduce((best, current) => {
             return current.match > best.match ? current : best;
         }, {match: -1} as CmpStrResult)

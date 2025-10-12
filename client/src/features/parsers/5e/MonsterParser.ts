@@ -20,13 +20,16 @@ const genericAbilities = [
 export const createMonsterFrom = (data: string[]): Monster => {
     const statBlock = [...data.filter(s => !isStringEmpty(s))]
 
-    return {
+    const monster = {
         ...emptyMonster,
         info: createGenericMonsterInfoFrom([...statBlock]),
         stats: createStatsFrom([...statBlock]),
         proficiencies: createProficienciesFrom([...statBlock]),
         senses: createSensesFrom([...statBlock]),
-        resistances: createResistancesFrom([...statBlock])
+        resistances: createResistancesFrom([...statBlock]),
     };
+
+    console.log(monster);
+    return monster;
 }
 

@@ -1,15 +1,16 @@
-import {matcherThreshold, ParserMatch} from "../../ParserHelper";
+import {matcherThreshold, ParserMatch, stripFirst} from "../../ParserHelper";
 import {GenericMonsterInfo} from "../../../../types/Monster";
 import {getSizeFromString} from "../../../../types/Size";
 import {emptyMovement, Movement, movementKeys} from "../../../../types/Movement";
 import {defaultMatcher, doesStringContainValue} from "../../Matcher";
 import type {CmpStrResult} from "cmpstr/dist/types/utils/Types";
-import {isStringEmpty} from "../../../../utils/validation";
+import {isStringEmpty, isStringNotEmpty} from "../../../../utils/validation";
 import {statKeys} from "../../../../types/Stats";
 import {getEnumKeys} from "../../../../utils/extraction";
 import {Skill} from "../../../../types/Skill";
 import {emptySenses, Senses, sensesKeys} from "../../../../types/Senses";
 import {damageTypes} from "../../../../types/DamageType";
+import {MAPPING_RESISTANCES} from "../mapping/5eMapping";
 
 //parser functions
 type GenericMonsterInfoParserFunction = (line: string, parserMatch: ParserMatch) => any;
@@ -59,7 +60,6 @@ export const parseMovement = (line: string): Movement => {
 export const parseProficiencies = (line: string): string[] => {
     const proficiencies: string[] = [];
 
-    console.log("proficiency lines", line)
     statKeys.forEach((key) => {
         if (doesStringContainValue(line, key).match > matcherThreshold) {
             proficiencies.push(key)
@@ -79,9 +79,19 @@ export const parseProficiencies = (line: string): string[] => {
 export const parseResistances = (lines: string[]): string[] => {
     const resistances: string[] = [];
 
+    //cleanup given strings
+    lines[0] = stripFirst(lines[0], MAPPING_RESISTANCES.value.length)
+
     lines.forEach((line) => {
-        resistances.push(...damageTypes.filter(type => doesStringContainValue(line, type).match > matcherThreshold));
-    })
+        line.split(" ").filter(isStringNotEmpty).forEach(word => {
+            resistances.push(
+                ...damageTypes
+                    .filter(type => {
+                        return doesStringContainValue(word.replace(",",""), type.replace("_", " ")).match > matcherThreshold;
+                    }
+            ));
+        });
+    });
 
     return resistances;
 }
@@ -89,7 +99,7 @@ export const parseResistances = (lines: string[]): string[] => {
 //TODO: passive perception will be calced based on prof and wis calculations
 export const parseSenses = (line: string): Senses => {
     const result = emptySenses;
-    const senses = line.slice(6, line.length).split("ft") // remove 'senses ' and split the string
+    const senses = stripFirst(line, 6).split("ft") // remove 'senses ' and split the string
         .map(l => l.replace(/[^a-zA-Z0-9\s]/, ""))
         .filter(s => !isStringEmpty(s));
 
@@ -99,7 +109,7 @@ export const parseSenses = (line: string): Senses => {
         let bestMatchScore: number = matcherThreshold;
 
         sensesKeys.forEach((key) => {
-            const res = defaultMatcher().test(senseElements[0], key) as CmpStrResult
+            const res = defaultMatcher().test(senseElements[0], key.replace("_", " ")) as CmpStrResult
             if (res.match > bestMatchScore) {
                 bestMatchScore = res.match;
                 bestKeyMatch = key;

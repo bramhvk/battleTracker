@@ -1,5 +1,7 @@
 import {CmpStr} from "cmpstr";
 import {CmpStrResult} from "cmpstr/dist/types/utils/Types";
+import {ORDER} from "./5e/mapping/5eMapping";
+import {defaultMatcher} from "./Matcher";
 
 export interface ParserMatch {
     keyword: KeywordMap;
@@ -80,12 +82,34 @@ export const findBestMatchInArray = (keywords: KeywordMap[],
                                      substringFrom: number = 0): ParserMatch => {
     let bestMatch: ParserMatch = emptyParserMatch
 
-        keywords.forEach((keyword) => {
-            const match = findBestMatchFor(keyword, matcher, testArrays, splitKeyword, substringKeywordLength, substringUntil, substringFrom);
-            if (match.match > bestMatch.match) {
-                bestMatch = match;
-            }
-        })
+    keywords.forEach((keyword) => {
+        const match = findBestMatchFor(keyword, matcher, testArrays, splitKeyword, substringKeywordLength, substringUntil, substringFrom);
+        if (match.match > bestMatch.match) {
+            bestMatch = match;
+        }
+    })
 
     return bestMatch;
+}
+
+export const findStringBlockFor = (statBlock: string[], keywordMap: KeywordMap): string[] => {
+    return statBlock.slice(findBestMatchFor(keywordMap, defaultMatcher(), statBlock, false).index, findLastLine(statBlock, keywordMap).index)
+}
+
+const findLastLine = (statBlock: string[], keywordMap: KeywordMap) => {
+    let nextParserMatch = emptyParserMatch;
+
+    ORDER
+        .slice(ORDER.findIndex(m => m.value === keywordMap.value) + 1, ORDER.length)
+        .find(m => {
+            const tmp = findBestMatchFor(m, defaultMatcher(), statBlock, false);
+            nextParserMatch = tmp;
+            return tmp.match > matcherThreshold
+        });
+
+    return nextParserMatch;
+}
+
+export const stripFirst = (line: string, characters: number) => {
+    return line.slice(characters, line.length)
 }
