@@ -1,14 +1,32 @@
-import {defaultMatcher} from "../Matcher";
-import {findBestMatchFor} from "../ParserHelper";
-import {ProficiencyKeywords} from "./mapping/5eMapping";
-import {parseProficiencies} from "./lines/5eLineParser";
+import {doesStringContainValue} from "../Matcher";
+import {findStringBlockFor, matcherThreshold, stripFirst} from "../ParserHelper";
+import {proficienciesKeywords} from "./mapping/5eMapping";
+import {statKeys} from "../../../types/Stats";
+import {getEnumKeys} from "../../../utils/extraction";
+import {Skill} from "../../../types/Skill";
 
 
 export const createProficienciesFrom = (statBlock: string[]): string[] => {
-    const matcher = defaultMatcher();
+    return proficienciesKeywords.map(k => stripFirst(findStringBlockFor(statBlock,k), k.value.length))
+        .flatMap((s) => parseProficiencies(s));
+}
 
-    //get Skills and SavingThrows
-    return ProficiencyKeywords
-        .map((key) => findBestMatchFor(key, matcher, statBlock, false))
-        .flatMap((parserMatch) => parseProficiencies(statBlock[parserMatch.index]));
+
+export const parseProficiencies = (line: string): string[] => {
+    const proficiencies: string[] = [];
+
+    statKeys.forEach((key) => {
+        if (doesStringContainValue(line, key).match > matcherThreshold) {
+            proficiencies.push(key)
+        }
+    });
+
+    getEnumKeys(Skill).forEach(key => {
+        const tmp = doesStringContainValue(line, key)
+        if (tmp.match > matcherThreshold) {
+            proficiencies.push(key)
+        }
+    })
+
+    return proficiencies;
 }

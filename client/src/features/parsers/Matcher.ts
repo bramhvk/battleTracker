@@ -10,19 +10,15 @@ export const getFirstWordsOfString = (string: string, number: number) => {
     return string.trim().split(/\s+/).slice(0, number).join(" ");
 }
 
-export const doesStringContainValue = (test: string, find: string, filter = (value: string) => !/[\d\W]/.test(value), threshold: number = matcherThreshold) => {
+export const doesStringContainValue = (test: string, find: string, filter = (value: string) => !/[\d\W]/.test(value), threshold: number = matcherThreshold): CmpStrResult => {
     const matcher = defaultMatcher();
 
     return test.trim()
         .split(/\s+/)
         .filter(filter)
         .map((value: string) => matcher.test(value, find) as CmpStrResult)
-
-
         .reduce((best, current) => {
             return current.match > best.match ? current : best;
         }, {match: -1} as CmpStrResult)
-
-
 }
 

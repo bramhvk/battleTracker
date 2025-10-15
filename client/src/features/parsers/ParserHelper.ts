@@ -1,7 +1,8 @@
 import {CmpStr} from "cmpstr";
 import {CmpStrResult} from "cmpstr/dist/types/utils/Types";
-import {ORDER} from "./5e/mapping/5eMapping";
-import {defaultMatcher} from "./Matcher";
+import {STATS_ORDER} from "./5e/mapping/5eMapping";
+import {defaultMatcher, doesStringContainValue} from "./Matcher";
+import {isStringEmpty, isStringNotEmpty} from "../../utils/validation";
 
 export interface ParserMatch {
     keyword: KeywordMap;
@@ -12,6 +13,9 @@ export interface ParserMatch {
 export interface KeywordMap {
     mappedValue: string;
     value: string;
+    options?: {
+        fMatch: (test: string, find: string) => {}
+    }
 }
 
 export const emptyKeywordMap: KeywordMap = {
@@ -25,7 +29,7 @@ export const emptyParserMatch: ParserMatch = {
     match: 0,
 }
 
-export const matcherThreshold = 0.6;
+export const matcherThreshold = 0.75;
 
 export const isBelowThreshold = (parserMatch: ParserMatch) => {
     return matcherThreshold > parserMatch.match;
@@ -59,7 +63,11 @@ export const findBestMatchFor = (keyword: KeywordMap,
     let bestMatchIndex: number = -1;
 
     testArrays.forEach((text, index) => {
-        const res = matcher.test(getTextToTest(text, substringFrom, substringUntil, keywordLength), keyword.value) as CmpStrResult;
+        //perform default matching or use the one provided in the options
+        const res = !!keyword.options?.fMatch
+            ? keyword.options.fMatch(text, keyword.value) as CmpStrResult
+            : matcher.test(getTextToTest(text, substringFrom, substringUntil, keywordLength), keyword.value) as CmpStrResult;
+
         if (res.match > bestMatchScore) {
             // console.log(text, bestMatchScore, bestMatchIndex)
             bestMatchScore = res.match;
@@ -92,17 +100,19 @@ export const findBestMatchInArray = (keywords: KeywordMap[],
     return bestMatch;
 }
 
-export const findStringBlockFor = (statBlock: string[], keywordMap: KeywordMap): string[] => {
-    return statBlock.slice(findBestMatchFor(keywordMap, defaultMatcher(), statBlock, false).index, findLastLine(statBlock, keywordMap).index)
+export const findStringBlockFor = (statBlock: string[], keywordMap: KeywordMap): string => {
+    const bestMatch = findBestMatchFor(keywordMap, defaultMatcher(), statBlock, false, true, keywordMap.value.length);
+    const lastLine = findLastLine(statBlock, keywordMap);
+    return statBlock.slice(bestMatch.index, lastLine.index).join(" ");
 }
 
-const findLastLine = (statBlock: string[], keywordMap: KeywordMap) => {
+export const findLastLine = (statBlock: string[], keywordMap: KeywordMap, reverse = false): ParserMatch => {
     let nextParserMatch = emptyParserMatch;
 
-    ORDER
-        .slice(ORDER.findIndex(m => m.value === keywordMap.value) + 1, ORDER.length)
+    (reverse ? [...STATS_ORDER].reverse() : STATS_ORDER)
+        .slice(STATS_ORDER.findIndex(m => m.value === keywordMap.value) + Number(!reverse), STATS_ORDER.length)
         .find(m => {
-            const tmp = findBestMatchFor(m, defaultMatcher(), statBlock, false);
+            const tmp = findBestMatchFor(m, defaultMatcher(), statBlock, false, true, m.value.length);
             nextParserMatch = tmp;
             return tmp.match > matcherThreshold
         });
@@ -112,4 +122,37 @@ const findLastLine = (statBlock: string[], keywordMap: KeywordMap) => {
 
 export const stripFirst = (line: string, characters: number) => {
     return line.slice(characters, line.length)
+}
+
+export const parseForKeys = (line: string, keywordMap: KeywordMap, keys: string[]): string[] => {
+    const results: string[] = [];
+
+    if (line.length) {
+        //cleanup given strings
+        line = stripFirst(line, keywordMap.value.length)
+
+        // lines.forEach((line) => {
+            line.split(" ").filter(isStringNotEmpty).forEach(word => {
+                results.push(
+                    ...keys
+                        .filter(type => {
+                                return doesStringContainValue(word.replace(",",""), type.replace("_", " ")).match > matcherThreshold;
+                            }
+                        ));
+            });
+        // });
+    }
+
+    return results;
+}
+
+export const splitDistances = (line: string): string[] => {
+    return line.split("ft")
+        .map(l => replaceNonAN(l))
+        .map(s => s.replace(",","").trim())
+        .filter(s => !isStringEmpty(s));
+}
+
+export const replaceNonAN = (line: string) => {
+    return line.replace(/[^a-zA-Z0-9\s]/g, "");
 }

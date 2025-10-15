@@ -1,7 +1,7 @@
-export const sensesKeys = ["passive_perception", "darkvision", "blindsight", "tremorsense", "truesight"] as const;
+export const sensesKeys = ["perception", "darkvision", "blindsight", "tremorsense", "truesight"] as const;
 
 export interface Senses {
-    passive_perception?: number;
+    perception?: number;
     darkvision?: number;
     blindsight?: number;
     tremorsense?: number;
@@ -9,7 +9,7 @@ export interface Senses {
 }
 
 export const emptySenses = {
-    passive_perception: 0,
+    perception: 0,
     darkvision: 0,
     blindsight: 0,
     tremorsense: 0,

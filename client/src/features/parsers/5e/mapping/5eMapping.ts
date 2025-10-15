@@ -1,4 +1,5 @@
-import {KeywordMap} from "../../ParserHelper";
+import {KeywordMap, replaceNonAN} from "../../ParserHelper";
+import {doesStringContainValue} from "../../Matcher";
 
 export const MAPPING_NAME: KeywordMap = {
     value: "name",
@@ -50,10 +51,6 @@ export const MAPPING_SKILLS: KeywordMap = {
     mappedValue: "proficiencies",
 }
 
-export const MAPPING_CR: KeywordMap = {
-    value: "Challenge",
-    mappedValue: "cr"
-}
 
 export const MAPPING_SENSES: KeywordMap = {
     value: "Senses",
@@ -71,7 +68,7 @@ export const MAPPING_RESISTANCES: KeywordMap = {
 }
 
 export const MAPPING_IMMUNITIES: KeywordMap = {
-    value: "immunities",
+    value: "Damage immunities",
     mappedValue: "immunities"
 }
 
@@ -80,7 +77,55 @@ export const MAPPING_CONDITIONS: KeywordMap = {
     mappedValue: "conditions"
 }
 
-export const ORDER: KeywordMap[] = [
+export const MAPPING_LANGUAGES: KeywordMap = {
+    value: "Languages",
+    mappedValue: "languages"
+}
+
+export const MAPPING_CR: KeywordMap = {
+    value: "Challenge",
+    mappedValue: "cr"
+}
+
+export const MAPPING_CR_FALLBACK: KeywordMap = {
+    value: "XP",
+    mappedValue: "cr",
+    options: {
+        fMatch: (test, find) => doesStringContainValue(replaceNonAN(test), find),
+    }
+}
+
+export const MAPPING_ABILITIES: KeywordMap = {
+    value: "",
+    mappedValue: "abilities"
+}
+
+export const MAPPING_ACTIONS: KeywordMap = {
+    value: "ACTIONS",
+    mappedValue: "actions"
+}
+
+export const MAPPING_BONUS_ACTIONS: KeywordMap = {
+    value: "BONUS ACTIONS",
+    mappedValue: "bActions"
+}
+
+export const MAPPING_LEGENDARY_ACTIONS: KeywordMap = {
+    value: "LEGENDARY ACTIONS",
+    mappedValue: "lActions"
+}
+
+export const MAPPING_REACTIONS: KeywordMap = {
+    value: "REACTIONS",
+    mappedValue: "reactions"
+}
+
+export const MAPPING_REGIONAL_EFFECTS: KeywordMap = {
+    value: "REGIONAL EFFECTS",
+    mappedValue: "rEffects"
+}
+
+export const STATS_ORDER: KeywordMap[] = [
     MAPPING_NAME,
     MAPPING_SIZE,
     MAPPING_AC,
@@ -93,8 +138,18 @@ export const ORDER: KeywordMap[] = [
     MAPPING_IMMUNITIES,
     MAPPING_CONDITIONS,
     MAPPING_SENSES,
-    MAPPING_CR
+    MAPPING_LANGUAGES,
+    MAPPING_CR,
+    MAPPING_CR_FALLBACK,
 ];
 
-export const GenericMonsterInfoKeywords: KeywordMap[] = [MAPPING_SPEED, MAPPING_AC, MAPPING_HIT_POINTS, MAPPING_HIT_DICE];
-export const ProficiencyKeywords: KeywordMap[] = [MAPPING_SAVING_THROWS, MAPPING_SKILLS];
+export const TRAITS_ORDER: KeywordMap[] = [
+    MAPPING_ACTIONS,
+    MAPPING_BONUS_ACTIONS,
+    MAPPING_LEGENDARY_ACTIONS,
+    MAPPING_REACTIONS,
+    MAPPING_REGIONAL_EFFECTS
+];
+
+export const GenericMonsterInfoKeywords: KeywordMap[] = [MAPPING_SPEED, MAPPING_AC, MAPPING_HIT_POINTS, MAPPING_HIT_DICE, MAPPING_CR, MAPPING_CR_FALLBACK];
+export const proficienciesKeywords: KeywordMap[] = [MAPPING_SAVING_THROWS, MAPPING_SKILLS];

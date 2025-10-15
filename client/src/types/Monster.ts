@@ -27,6 +27,7 @@ export interface GenericMonsterInfo {
     hitDice: number;
     movement: Movement;
     size: Size,
+    languages: string,
     cr: number;
 }
 
@@ -42,12 +43,13 @@ const emptyGenericMonsterInfoObject: GenericMonsterInfo = {
     hitPoints: 0,
     movement: emptyMovement,
     size: Size.MEDIUM,
+    languages: "",
     cr: 0,
 }
 
 export const emptyGenericMonsterInfo: GenericMonsterInfo = {...emptyGenericMonsterInfoObject}
 
-const emptyMonsterObject: Monster = {
+export const emptyMonsterObject: Monster = {
     _id: "",
     info: emptyGenericMonsterInfo,
     stats: emptyStats,

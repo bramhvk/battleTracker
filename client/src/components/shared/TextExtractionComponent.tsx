@@ -2,7 +2,7 @@ import React, {useState} from "react";
 import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {CircularProgress, styled} from "@mui/material";
-import {createWorker} from "tesseract.js";
+import {createWorker, PSM} from "tesseract.js";
 import {OCRDialogComponent} from "../OCR/dialog/OCRDialogComponent";
 import {OCR_DIALOG_TYPE} from "../OCR/utils/properties";
 import {isImageEmpty} from "../../utils/validation";
@@ -27,6 +27,8 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
     const [imageData, setImageData] = useState<string[]>(['']);
     const [originalImage, setOriginalImage] = useState<string[]>([''])
     const [progress, setProgress] = useState(0);
+    const [imageCount, setImageCount] = useState(0);
+    const [imageTotal, setImageTotal] = useState(1)
     const [progressLabel, setProgressLabel] = useState('idle');
     const [ocrResult, setOcrResult] = useState(['']);
 
@@ -59,7 +61,26 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
                 )))
     }
 
+    const resizeImageForOCR = async (src: string, scale = 2): Promise<string> => {
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                const canvas = document.createElement('canvas');
+                canvas.width = img.width * scale;
+                canvas.height = img.height * scale;
+                const ctx = canvas.getContext('2d')!;
+                ctx.imageSmoothingEnabled = true;
+                ctx.imageSmoothingQuality = 'high';
+                ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+                resolve(canvas.toDataURL('image/png'));
+            };
+            img.src = src;
+        });
+    };
+
     const handleExtraction = async () => {
+        setImageTotal(imageData.length);
+        setImageCount(1);
         setProgress(0);
         setProgressLabel('starting');
 
@@ -69,17 +90,24 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
                     setProgress(m.progress * 100);
                     setProgressLabel(m.progress === 1 ? 'Done' : m.status);
                 }
-            }
+            },
+    });
+
+        await worker.setParameters({
+            tessedit_char_whitelist: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-+/().,\'–—%:;!? ',
+            preserve_interword_spaces: '1',
+            tessedit_pageseg_mode: PSM.SINGLE_COLUMN,
         });
 
         let data: string[] = [""];
 
         for (const img of imageData) {
+            const resizedImg = await resizeImageForOCR(img, 2.5);
             const {
                 data: {text},
-            } = await worker.recognize(img);
-            const x = text.split(/\r?\n|\r\n/g)
+            } = await worker.recognize(resizedImg);
             data.push(...text.split(/\r?\n|\r\n/g));
+            setImageCount(imageCount + 1);
         }
         setOcrResult(data);
         onTextExtracted(data)
@@ -111,7 +139,7 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
         <Button onClick={() => setContrastDialogOpen(true)}>Contrast</Button>
         <Button onClick={handleExtraction}>Extract</Button>
 
-        <span>{progressLabel.toUpperCase()}</span>
+        <span>{progressLabel.toUpperCase()} {imageCount} / {imageTotal}</span>
         <CircularProgress variant={"determinate"} value={progress}/>
 
         <OCRDialogComponent

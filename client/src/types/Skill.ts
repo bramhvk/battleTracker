@@ -1,3 +1,5 @@
+export const skills = ["athletics", "acrobatics", "sleight of hand", "stealth", "arcana", "history", "investigation", "nature", "religion", "animal handling", "insight", "medicine", "perception", "survival", "deception", "intimidation", "performance", "persuasion"];
+
 export enum Skill {
     ATHLETICS = "athletics",
     ACROBATICS = "acrobatics",

@@ -1,4 +1,4 @@
-export const statKeys = ["str", "dex", "con", "int", "wis", "cha"] as const;
+export const statKeys = ["str", "dex", "con", "int", "wis", "cha"];
 
 export interface Stats {
     str: number;

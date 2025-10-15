@@ -15,10 +15,11 @@ export enum DamageType {
     SLASHING = "slashing",
     BLUDGEONING = "bludgeoning",
     NON_MAGICAL = "non_magical",
+    ERROR = "error",
 }
 
 export const getDamageTypeFrom = (key: string) => {
-    if (key === undefined) return DamageType.ACID;
+    if (key === undefined) return DamageType.ERROR;
 
     const normalized = key.trim().toUpperCase();
 
@@ -26,5 +27,5 @@ export const getDamageTypeFrom = (key: string) => {
         return DamageType[normalized as keyof typeof DamageType];
     }
 
-    return DamageType.ACID;
+    return DamageType.ERROR;
 }

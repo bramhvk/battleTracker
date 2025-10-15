@@ -1,4 +1,4 @@
-import {emptyMonster, Monster} from "../../../types/Monster";
+import {emptyMonster, emptyMonsterObject, Monster} from "../../../types/Monster";
 import React, {useEffect, useState} from "react";
 import CreateMonsterDialog from "../dialog/CreateMonsterDialog";
 import Button from "@mui/material/Button";
@@ -20,6 +20,7 @@ const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
     useEffect(() => { id ? getMonsterById(id).then(setData) : setData(emptyMonster);}, [id])
 
     const handleExtractedText = (extractedText: string[]) => {
+        setData(emptyMonsterObject);
         setData(createMonsterFrom(extractedText))
     }
 
