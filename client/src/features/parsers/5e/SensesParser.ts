@@ -11,7 +11,6 @@ export const createSensesFrom = (statBlock: string[]): Senses => {
 }
 
 
-//TODO: passive perception will be calced based on prof and wis calculations
 const parseSenses = (line: string): Senses => {
     const result = emptySenses;
 

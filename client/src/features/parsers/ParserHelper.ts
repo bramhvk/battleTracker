@@ -131,16 +131,14 @@ export const parseForKeys = (line: string, keywordMap: KeywordMap, keys: string[
         //cleanup given strings
         line = stripFirst(line, keywordMap.value.length)
 
-        // lines.forEach((line) => {
-            line.split(" ").filter(isStringNotEmpty).forEach(word => {
-                results.push(
-                    ...keys
-                        .filter(type => {
-                                return doesStringContainValue(word.replace(",",""), type.replace("_", " ")).match > matcherThreshold;
-                            }
-                        ));
-            });
-        // });
+        line.split(" ").filter(isStringNotEmpty).forEach(word => {
+            results.push(
+                ...keys.filter(type => {
+                        return doesStringContainValue(replaceNonAN(word), type.replace("_", " ")).match > matcherThreshold;
+                    })
+            );
+        });
+
     }
 
     return results;
