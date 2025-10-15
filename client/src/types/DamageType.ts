@@ -18,8 +18,8 @@ export enum DamageType {
     ERROR = "error",
 }
 
-export const getDamageTypeFrom = (key: string) => {
-    if (key === undefined) return DamageType.ERROR;
+export const getDamageTypeFrom = (key: string): DamageType => {
+    if (!key) return DamageType.ERROR;
 
     const normalized = key.trim().toUpperCase();
 

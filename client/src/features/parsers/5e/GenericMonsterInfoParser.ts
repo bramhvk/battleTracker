@@ -9,12 +9,13 @@ import {
     KeywordMap,
     matcherThreshold,
     ParserMatch,
-    splitDistances
+    splitDistances,
+    stripFirst
 } from "../ParserHelper";
 import {getEnumKeys} from "../../../utils/extraction";
 import {getSizeFromString, Size} from "../../../types/Size";
 import {defaultMatcher} from "../Matcher";
-import {GenericMonsterInfoKeywords, MAPPING_NAME} from "./mapping/5eMapping";
+import {GenericMonsterInfoKeywords, MAPPING_LANGUAGES, MAPPING_NAME} from "./mapping/5eMapping";
 import {emptyMovement, Movement, movementKeys} from "../../../types/Movement";
 import {isStringEmpty} from "../../../utils/validation";
 import type {CmpStrResult} from "cmpstr/dist/types/utils/Types";
@@ -97,7 +98,7 @@ const parseGenericMonsterInfo: Record<keyof GenericMonsterInfo, GenericMonsterIn
     hitDice: (l) => l.match(/(?:\D*\d+\D*)(\d+)/)?.[1] ?? 0,
     movement: (l) => parseMovement(l),
     size: (_, p) => getSizeFromString(p.keyword.value) ?? 0,
-    languages: (l) => l,
+    languages: (l) => stripFirst(l, MAPPING_LANGUAGES.value.length),
     cr: (l) => l.match(/\d{1,}/)?.[0] ?? 0,
 };
 

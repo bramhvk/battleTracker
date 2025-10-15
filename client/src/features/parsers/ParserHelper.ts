@@ -14,7 +14,8 @@ export interface KeywordMap {
     mappedValue: string;
     value: string;
     options?: {
-        fMatch: (test: string, find: string) => {}
+        fMatch: (test: string, find: string) => {},
+        fFind: string,
     }
 }
 
@@ -65,7 +66,7 @@ export const findBestMatchFor = (keyword: KeywordMap,
     testArrays.forEach((text, index) => {
         //perform default matching or use the one provided in the options
         const res = !!keyword.options?.fMatch
-            ? keyword.options.fMatch(text, keyword.value) as CmpStrResult
+            ? keyword.options.fMatch(text, keyword.options?.fFind) as CmpStrResult
             : matcher.test(getTextToTest(text, substringFrom, substringUntil, keywordLength), keyword.value) as CmpStrResult;
 
         if (res.match > bestMatchScore) {

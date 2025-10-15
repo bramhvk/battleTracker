@@ -4,6 +4,7 @@ import {DamageType} from "./DamageType";
 import {emptyMovement, Movement} from "./Movement";
 import {emptySenses, Senses} from "./Senses";
 import {Condition} from "./Condition";
+import {Trait} from "./Trait";
 
 export interface Monster {
     _id: string;
@@ -14,10 +15,13 @@ export interface Monster {
     immunities: DamageType[];
     resistances: DamageType[];
     conditions: Condition[];
-    // languages: Language[];
-    // cr: number;
-    // abilities: string[];
-    // attacks: Attack[]
+    languages: string;
+    abilities: Trait[];
+    actions: Trait[];
+    bActions: Trait[];
+    lActions: Trait[];
+    reactions: Trait[];
+    rEffects: Trait[];
 }
 
 export interface GenericMonsterInfo {
@@ -58,6 +62,13 @@ export const emptyMonsterObject: Monster = {
     immunities: [],
     resistances: [],
     conditions: [],
+    languages: "",
+    abilities: [],
+    actions: [],
+    bActions: [],
+    lActions: [],
+    reactions: [],
+    rEffects: [],
 }
 
 export const emptyMonster: Monster = {...emptyMonsterObject}

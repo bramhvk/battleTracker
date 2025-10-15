@@ -88,10 +88,11 @@ export const MAPPING_CR: KeywordMap = {
 }
 
 export const MAPPING_CR_FALLBACK: KeywordMap = {
-    value: "XP",
+    value: "Challenge",
     mappedValue: "cr",
     options: {
         fMatch: (test, find) => doesStringContainValue(replaceNonAN(test), find),
+        fFind: "XP",
     }
 }
 
