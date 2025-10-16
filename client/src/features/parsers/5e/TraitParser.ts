@@ -1,7 +1,7 @@
 import {KeywordMap, ParserMatch} from "../ParserHelper";
 import {emptyTrait, Trait} from "../../../types/Trait";
 import {emptyTrigger, Trigger} from "../../../types/Trigger";
-import {getRangeFrom} from "../../../types/Attack";
+import {Attack, getRangeFrom} from "../../../types/Attack";
 import {getDamageTypeFrom} from "../../../types/DamageType";
 
 export const createTraitsFrom = (lines: string[], keywordMap: KeywordMap, parserMatches: ParserMatch[]): Trait[] => {
@@ -62,17 +62,16 @@ const createAttackTrait = (match: RegExpMatchArray): Trait => {
         name: match[1],
         text: match[0],
         amount: 1,
-        attacks: [{
-            name: match[1],
-            range: getRangeFrom(match[2]),
-            bonus: Number(match[3]),
-            reach: match[5],
-            target: match[6],
-            damage: damage[1],
-            damageTypes: [getDamageTypeFrom(damage[2])],
-        }],
+        range: getRangeFrom(match[2]),
+        bonus: Number(match[3]),
+        reach: match[5],
+        target: match[6],
+        damageDice: damage[1],
+        amountDice: damage[1],
+        damageTypes: [getDamageTypeFrom(damage[2])],
+        isMagical: false,
         triggers: [trigger]
-    };
+    } as Attack;
 }
 
 const parseTrigger = (line: string): Trigger => {

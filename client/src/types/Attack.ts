@@ -1,15 +1,15 @@
 import {DamageType} from "./DamageType";
+import {Trait} from "./Trait";
 
-export interface Attack {
-    name: string;
+export interface Attack extends Trait {
     range: AttackRange;
     bonus: number;
     reach: string;
     target: string;
-    damage: string;
+    damageDice: string;
+    amountDice: string;
     damageTypes: DamageType[];
-    isMagical?: boolean;
-    isSpell?: boolean;
+    isMagical: boolean;
 }
 
 export interface Spell extends Attack {
@@ -21,7 +21,6 @@ export interface Spell extends Attack {
     duration: string;
     castingTime: string;
     dc?: number;
-    text: string;
 }
 
 export enum AttackRange {
