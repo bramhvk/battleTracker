@@ -1,33 +1,19 @@
 import React, {useState} from "react";
 import MonsterDashboard from "./pages/MonsterDashboard";
-import CreateEditMonster from "./pages/CreateEditMonster";
+import {useNavigate} from "react-router-dom";
+import {isStringEmpty} from "../../utils/validation";
+import Button from "@mui/material/Button";
 
-enum ComponentState {
-    OVERVIEW,
-    EDIT,
-}
+const MonsterOverview: React.FC = () => {
 
-interface EnemyDashboardProps {
-
-}
-
-const MonsterOverview: React.FunctionComponent<EnemyDashboardProps> = () => {
-
-    const [state, setState] = useState(ComponentState.OVERVIEW)
-    const [selectedMonsterId, setSelectedMonsterId] = useState('')
+    const navigate = useNavigate();
+    const [selectedId, setSelectedId] = useState('')
 
     return (
         <div>
-            {(() => {
-                switch (state) {
-                    case ComponentState.OVERVIEW:
-                        return <MonsterDashboard onClick={setSelectedMonsterId} onButtonClick={() => setState(ComponentState.EDIT)} />;
-                    case ComponentState.EDIT:
-                        return <CreateEditMonster id={selectedMonsterId}/>
-                    default:
-                        return null;
-                }
-            })()}
+            <MonsterDashboard onClick={setSelectedId} />
+            <Button onClick={() => navigate('/enemies/extract')}>Add Monster</Button>
+            <Button onClick={() => navigate('/enemies/edit', {state: {selectedId}})} sx={{ display: isStringEmpty(selectedId) ? "none" : "inline-flex" }}>Edit Monster</Button>
         </div>
     );
 }

@@ -7,17 +7,21 @@ import {StatBlock} from "../../shared/StatBlock";
 import {TextExtractionComponent} from "../../shared/TextExtractionComponent";
 import {MonsterInfo} from "../../shared/MonsterInfo";
 import {createMonsterFrom} from "../../../features/parsers/5e/MonsterParser";
+import {useLocation} from "react-router-dom";
 
 interface CreateEditMonsterProps {
-    id?: string;
+    // id?: string;
 }
 
-const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
+const EditMonster: React.FC<CreateEditMonsterProps> = () => {
+    const location = useLocation();
+    const id = location.state?.id as string | undefined;
     const [data, setData] = useState<Monster | null>(null);
     const [createMonsterDialog, setCreateMonsterDialog] = useState(false)
     const [extractedText, setExtractedText] = useState([''])
 
-    useEffect(() => { id ? getMonsterById(id).then(setData) : setData(emptyMonster);}, [id])
+    useEffect(() => {
+        console.log(id); id ? getMonsterById(id).then(setData) : setData(emptyMonster);}, [id])
 
     const handleExtractedText = (extractedText: string[]) => {
         setData(emptyMonsterObject);
@@ -41,4 +45,4 @@ const CreateEditMonster: React.FC<CreateEditMonsterProps> = ({id}) => {
     );
 };
 
-export default CreateEditMonster;
+export default EditMonster;

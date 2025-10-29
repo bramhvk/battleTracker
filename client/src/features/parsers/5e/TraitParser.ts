@@ -45,7 +45,7 @@ const parseMultiAttack = (line: string) => {
 
 const parseAttack = (line: string) => {
     // @ts-ignore
-    return line.match(/^(?<name>[A-Z][\w\s'-]+)\.\s*(?<type>Melee|Ranged|Melee or Ranged)\s+Weapon\s+Attack:\s*(?<bonus>[+–-]?\d+)\s*to hit[,.]{1,2}\s(Reach|Range)\s(?<reach>\d+|[\d\/\d]+)\s?ft[,.]{1,2}\s?(?<target>[\w\s,)(]*).\s*Hit:?\s*(?<damage>[\d\s\w]+|[\d\(\)d+\s\w]+)\s+?damage.?\s*(?<text>[\S\s]*)/i)
+    return line.match(/^(?<name>[A-Z][\w\s'-]+)\.\s*(?<type>Melee|Ranged|Melee or Ranged)\s+[Weapon|Spell]+\s+Attack:\s*(?<bonus>[+–-]?\d+)\s*to hit[,.]{1,2}\s(Reach|Range)\s(?<reach>\d+|[\d\/\d]+)\s?ft[,.]{1,2}\s?(?<target>[\w\s,)(]*).\s*Hit:?\s*(?<damage>[\d\s\w]+|[\d\(\)d+\s\w-]+)\s+?damage.?\s*(?<text>[\S\s]*)/i)
 }
 
 const createAttackTrait = (match: RegExpMatchArray): Trait => {

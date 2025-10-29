@@ -35,6 +35,7 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
     const [cropDialogOpen, setCropDialogOpen] = useState<boolean>(false);
     const [splitDialogOpen, setSplitDialogOpen] = useState<boolean>(false);
     const [contrastDialogOpen, setContrastDialogOpen] = useState<boolean>(false);
+    const [skewDialogOpen, setSkewDialogOpen] = useState<boolean>(false);
 
     const loadFile = (file: File) => {
         console.log(file)
@@ -137,6 +138,7 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
         <Button onClick={resetImage}>reset image</Button>
         <Button onClick={() => setSplitDialogOpen(true)}>Split</Button>
         <Button onClick={() => setContrastDialogOpen(true)}>Contrast</Button>
+        <Button onClick={() => setSkewDialogOpen(true)}>Skew</Button>
         <Button onClick={handleExtraction}>Extract</Button>
 
         <span>{progressLabel.toUpperCase()} {imageCount} / {imageTotal}</span>
@@ -163,6 +165,14 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
             open={contrastDialogOpen}
             imageData={imageData}
             onClose={() => setContrastDialogOpen(false)}
+            onConfirm={(imageDate) => setImageData(imageDate)}
+        />
+
+        <OCRDialogComponent
+            type={OCR_DIALOG_TYPE.SKEW}
+            open={skewDialogOpen}
+            imageData={imageData}
+            onClose={() => setSkewDialogOpen(false)}
             onConfirm={(imageDate) => setImageData(imageDate)}
         />
     </>);

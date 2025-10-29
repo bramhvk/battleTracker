@@ -5,6 +5,7 @@ import Button from "@mui/material/Button";
 import {useState} from "react";
 import {SplitImageComponent} from "../manipulation/SplitImageComponent";
 import ContrastImageComponent from "../manipulation/ContrastImageComponent";
+import SkewImageComponent from "../manipulation/SkewImageComponent";
 
 
 interface OCRDialogProps {
@@ -38,6 +39,8 @@ const OCRDialogComponent: React.FC<OCRDialogProps> = ({type, open, imageData, on
                             return <SplitImageComponent imageData={imageData[0]} onSplit={(res) => setTempResult(res)} />;
                         case OCR_DIALOG_TYPE.CONTRAST:
                             return <ContrastImageComponent imageData={imageData[0]} onDone={(res) => setTempResult(res)}/>;
+                        case OCR_DIALOG_TYPE.SKEW:
+                            return <SkewImageComponent imageData={imageData[0]} onDone={(res) => setTempResult(res)}/>;
                         default:
                             return null;
                     }

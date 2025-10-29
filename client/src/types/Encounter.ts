@@ -1,7 +1,7 @@
 import {Monster} from "./Monster";
-import {Character} from "./Character";
+import {PlayerCharacter} from "./PlayerCharacter";
 
 export interface Encounter {
     monsters: Monster[];
-    characters: Character[];
+    characters: PlayerCharacter[];
 }
