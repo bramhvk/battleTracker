@@ -1,9 +1,6 @@
 import {useEffect, useState} from "react";
-import {TextExtractionComponent} from "./TextExtractionComponent";
 import {FormControl, FormLabel, Input} from "@mui/material";
 import {emptyStats, Stats} from "../../types/Stats";
-import {isArrayEmpty} from "../../utils/validation";
-import {createStatsFrom} from "../../features/parsers/5e/StatsParsers";
 
 interface StatBlockProps {
     data: Stats;
@@ -13,17 +10,10 @@ interface StatBlockProps {
 const StatBlock: React.FC<StatBlockProps> = ({data, providedText}) => {
 
     const [stats, setStats] = useState(emptyStats)
-    const [extractedText, setExtractedText] = useState<string[]>([""])
-
-    const processStats = (extractedText: string[]) => {
-        setExtractedText(extractedText)
-        setStats(createStatsFrom(extractedText))
-    }
 
     // set the data on page load
     useEffect(() => {
         setStats(data);
-        providedText && !isArrayEmpty(providedText) && setExtractedText(providedText)
     }, [data])
 
     return (
@@ -52,7 +42,6 @@ const StatBlock: React.FC<StatBlockProps> = ({data, providedText}) => {
                 <FormLabel>CHA</FormLabel>
                 <Input placeholder="CHA" value={stats.cha} type={"number"} onChange={(e) => setStats({...stats, cha: Number(e.target.value)})}/>
             </FormControl>
-            <TextExtractionComponent onTextExtracted={(extractedText) => processStats(extractedText)}/>
         </div>
     );
 }

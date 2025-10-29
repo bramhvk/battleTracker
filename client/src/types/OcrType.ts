@@ -1,5 +1,6 @@
 
-export enum OCR_DIALOG_TYPE {
+export enum OCR_TYPE {
+    NONE = "none",
     CROP = "Crop",
     SPLIT = "Split",
     CONTRAST = "Contrast",

@@ -26,11 +26,7 @@ const MonsterDashboard: React.FC<MonsterDashboardProps> = ({onClick}) => {
     ];
 
 
-    return (
-        <div>
-            <GenericTable data={data} cols={cols} onClick={onClick} />
-        </div>
-    );
+    return (<GenericTable data={data} cols={cols} onClick={onClick} />);
 }
 
 export default MonsterDashboard;

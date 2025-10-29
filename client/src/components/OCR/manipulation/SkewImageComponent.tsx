@@ -1,16 +1,17 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {forwardRef, useEffect, useImperativeHandle, useRef, useState} from "react";
+import {ApplyImageChanges} from "../../shared/TextExtraction/TextExtractionComponent";
 
 interface SkewImageProps {
     imageData: string; // Base64 string or file URL
     onDone: (processedImage: string[]) => void; // return updated image
 }
 
-const SkewImageComponent: React.FC<SkewImageProps> = ({ imageData, onDone }) => {
+const SkewImageComponent = forwardRef<ApplyImageChanges, SkewImageProps>(({imageData, onDone}, ref) => {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-    const [angle, setAngle] = useState(0);
-    const [zoom, setZoom] = useState(1); // 1 = 100%
-    const [showGuide, setShowGuide] = useState(false);
+    const [angle, setAngle] = useState(0); //in rads
     const [img, setImg] = useState<HTMLImageElement | null>(null);
+    const [isDragging, setIsDragging] = useState(false);
+    const [startX, setStartX] = useState<number | null>(null);
 
     // Load image
     useEffect(() => {
@@ -19,94 +20,70 @@ const SkewImageComponent: React.FC<SkewImageProps> = ({ imageData, onDone }) => 
         image.onload = () => setImg(image);
     }, [imageData]);
 
-    // Draw image on canvas with rotation + zoom
+
     const drawImage = () => {
         if (!canvasRef.current || !img) return;
-        const ctx = canvasRef.current.getContext("2d")!;
-        const cw = canvasRef.current.width = canvasRef.current.clientWidth;
-        const ch = canvasRef.current.height = canvasRef.current.clientHeight;
+        const canvas = canvasRef.current;
 
-        ctx.clearRect(0, 0, cw, ch);
+        const ctx = canvas.getContext("2d");
+        if (!ctx) return;
+
+        // Set canvas to image dimensions
+        canvas.width = img.width;
+        canvas.height = img.height;
+
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+        // Translate to center for rotation
         ctx.save();
-        ctx.translate(cw / 2, ch / 2);
-        ctx.scale(zoom, zoom); // zoom applied here
-        ctx.rotate((angle * Math.PI) / 180);
+        ctx.translate(canvas.width / 2, canvas.height / 2);
+        ctx.rotate(angle); // rotate by current angle
         ctx.drawImage(img, -img.width / 2, -img.height / 2);
         ctx.restore();
 
-        // Draw horizontal guideline
-        if (showGuide) {
-            ctx.save();
-            ctx.strokeStyle = "red";
-            ctx.lineWidth = 1;
-            ctx.beginPath();
-            ctx.moveTo(0, ch / 2);
-            ctx.lineTo(cw, ch / 2);
-            ctx.stroke();
-            ctx.restore();
-        }
     };
 
     useEffect(() => {
         drawImage();
-    }, [img, angle, zoom, showGuide]);
+    }, [img, angle]);
 
-    // Handle Done
-    const handleDone = () => {
-        if (!canvasRef.current) return;
-        const dataURL = canvasRef.current.toDataURL("image/png");
-        onDone([dataURL]);
+    // Mouse handlers to drag and rotate
+    const handleMouseDown = (e: React.MouseEvent) => {
+        setIsDragging(true);
+        setStartX(e.clientX);
     };
 
+    const handleMouseMove = (e: React.MouseEvent) => {
+        if (!isDragging || startX === null) return;
+        const deltaX = e.clientX - startX;
+        setAngle((prev) => prev + deltaX * 0.001); // change sensitivity if needed
+        setStartX(e.clientX);
+    };
+
+    const handleMouseUp = () => {
+        setIsDragging(false);
+        setStartX(null);
+    };
+
+
+    useImperativeHandle(ref, () => ({
+        apply: () => {
+            if (!canvasRef.current) return;
+            const rotatedDataUrl = canvasRef.current.toDataURL("image/png");
+            onDone([rotatedDataUrl]);
+        }
+    }));
+
     return (
-        <div style={{display: "flex", flexDirection: "column", gap: "10px"}}>
-            <canvas
-                ref={canvasRef}
-                style={{
-                    border: "1px solid #ccc",
-                    width: "100%",   // fill dialog width
-                    height: "400px", // fixed height or adjust to your dialog
-                }}
-            />
-
-            <label>
-                Rotate: {angle.toFixed(1)}°
-                <input
-                    type="range"
-                    min={-20}
-                    max={20}
-                    step={0.1}
-                    value={angle}
-                    onChange={(e) => setAngle(parseFloat(e.target.value))}
-                    style={{width: "100%"}}
-                />
-            </label>
-
-            <label>
-                Zoom: {(zoom * 100).toFixed(0)}%
-                <input
-                    type="range"
-                    min={0.1}
-                    max={3}
-                    step={0.01}
-                    value={zoom}
-                    onChange={(e) => setZoom(parseFloat(e.target.value))}
-                    style={{width: "100%"}}
-                />
-            </label>
-
-            <label>
-                <input
-                    type="checkbox"
-                    checked={showGuide}
-                    onChange={() => setShowGuide(!showGuide)}
-                />
-                Show Horizontal Guideline
-            </label>
-
-            <button onClick={handleDone}>Done</button>
-        </div>
+        <canvas
+            ref={canvasRef}
+            style={{border: "1px solid black", cursor: "grab"}}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUp}
+            onMouseLeave={handleMouseUp}
+        />
     );
-};
+});
 
 export default SkewImageComponent;

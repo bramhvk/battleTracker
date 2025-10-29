@@ -1,0 +1,20 @@
+
+.text-extraction button{
+  background-color: rebeccapurple;
+  color: greenyellow;
+}
+
+.image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  max-width: 100%;
+
+  img, canvas {
+    max-width: 100%;
+    height: auto;
+    object-fit: contain;
+  }
+
+}

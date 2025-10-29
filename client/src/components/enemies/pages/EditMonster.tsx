@@ -1,32 +1,30 @@
-import {emptyMonster, emptyMonsterObject, Monster} from "../../../types/Monster";
+import {emptyMonster, Monster} from "../../../types/Monster";
 import React, {useEffect, useState} from "react";
-import CreateMonsterDialog from "../dialog/CreateMonsterDialog";
-import Button from "@mui/material/Button";
 import {getMonsterById} from "../../../services/MonsterService";
 import {StatBlock} from "../../shared/StatBlock";
-import {TextExtractionComponent} from "../../shared/TextExtractionComponent";
 import {MonsterInfo} from "../../shared/MonsterInfo";
-import {createMonsterFrom} from "../../../features/parsers/5e/MonsterParser";
 import {useLocation} from "react-router-dom";
 
-interface CreateEditMonsterProps {
-    // id?: string;
-}
 
-const EditMonster: React.FC<CreateEditMonsterProps> = () => {
+const EditMonster: React.FC = () => {
     const location = useLocation();
     const id = location.state?.id as string | undefined;
+    const monster  = location.state?.monster as Monster | undefined;
+
     const [data, setData] = useState<Monster | null>(null);
-    const [createMonsterDialog, setCreateMonsterDialog] = useState(false)
-    const [extractedText, setExtractedText] = useState([''])
 
     useEffect(() => {
-        console.log(id); id ? getMonsterById(id).then(setData) : setData(emptyMonster);}, [id])
-
-    const handleExtractedText = (extractedText: string[]) => {
-        setData(emptyMonsterObject);
-        setData(createMonsterFrom(extractedText))
-    }
+            if (monster) {
+                setData(monster);
+            } else {
+                if (id) {
+                    getMonsterById(id).then(setData)
+                } else {
+                    setData(emptyMonster)
+                }
+            }
+        }
+    )
 
     //wait for data to be loaded before the first render
     if (!data) return null;
@@ -35,12 +33,8 @@ const EditMonster: React.FC<CreateEditMonsterProps> = () => {
         <>
             {id}
             {JSON.stringify(data)}
-            <TextExtractionComponent onTextExtracted={handleExtractedText}/>
             <MonsterInfo data={data.info} />
             <StatBlock data={data.stats} />
-            {/*<StatBlock data={data.savingThrows} />*/}
-            <Button onClick={() => setCreateMonsterDialog(true)}>Scan Stat block</Button>
-            <CreateMonsterDialog open={createMonsterDialog} onClose={() => setCreateMonsterDialog(false)} />
         </>
     );
 };

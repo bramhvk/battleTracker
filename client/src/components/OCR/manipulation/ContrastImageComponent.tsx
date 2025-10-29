@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, {forwardRef, useEffect, useRef, useState} from "react";
+import {ApplyImageChanges} from "../../shared/TextExtraction/TextExtractionComponent";
 
 interface ContrastImageProps {
     imageData: string; // Base64 string or file URL
@@ -7,12 +8,12 @@ interface ContrastImageProps {
     onDone: (processedImage: string[]) => void; // return updated image
 }
 
-const ContrastImageComponent: React.FC<ContrastImageProps> = ({
-                                                         imageData,
-                                                         initialContrast = 60,
-                                                         initialThreshold = 128,
-                                                         onDone,
-                                                     }) => {
+const ContrastImageComponent = forwardRef<ApplyImageChanges, ContrastImageProps>(({
+                                                                                      imageData,
+                                                                                      initialContrast = 60,
+                                                                                      initialThreshold = 128,
+                                                                                      onDone,
+                                                                                  }, ref) => {
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
     const [contrast, setContrast] = useState<number>(initialContrast);
     const [threshold, setThreshold] = useState<number>(initialThreshold);
@@ -63,10 +64,10 @@ const ContrastImageComponent: React.FC<ContrastImageProps> = ({
         <div>
             <canvas
                 ref={canvasRef}
-                style={{ maxWidth: "100%", display: "block", marginBottom: "10px" }}
+                style={{maxWidth: "100%", display: "block", marginBottom: "10px"}}
             />
 
-            <div style={{ marginBottom: "10px" }}>
+            <div style={{marginBottom: "10px"}}>
                 <label>Contrast: {contrast}</label>
                 <input
                     type="range"
@@ -74,17 +75,17 @@ const ContrastImageComponent: React.FC<ContrastImageProps> = ({
                     max="255"
                     value={contrast}
                     onChange={(e) => setContrast(Number(e.target.value))}
-                    style={{ width: "100%" }}
+                    style={{width: "100%"}}
                 />
             </div>
 
-            <div style={{ marginBottom: "10px" }}>
+            <div style={{marginBottom: "10px"}}>
                 <label>
                     <input
                         type="checkbox"
                         checked={enableThreshold}
                         onChange={() => setEnableThreshold(!enableThreshold)}
-                        style={{ marginRight: "8px" }}
+                        style={{marginRight: "8px"}}
                     />
                     Enable Threshold
                 </label>
@@ -99,12 +100,12 @@ const ContrastImageComponent: React.FC<ContrastImageProps> = ({
                         max="255"
                         value={threshold}
                         onChange={(e) => setThreshold(Number(e.target.value))}
-                        style={{ width: "100%" }}
+                        style={{width: "100%"}}
                     />
                 </div>
             )}
         </div>
     );
-};
+});
 
 export default ContrastImageComponent;
