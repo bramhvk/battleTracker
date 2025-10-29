@@ -11,6 +11,6 @@ export const emptyTrait = {
     name: "",
     text: "",
     amount: 0,
-    attacks: [],
+    // attacks: [],
     triggers: [],
 } as Trait;

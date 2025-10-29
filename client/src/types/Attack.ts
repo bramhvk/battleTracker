@@ -1,14 +1,13 @@
-import {DamageType} from "./DamageType";
 import {Trait} from "./Trait";
+import {Damage} from "./Damage";
 
 export interface Attack extends Trait {
-    range: AttackRange;
+    type: AttackRange;
     bonus: number;
+    range: string;
     reach: string;
     target: string;
-    damageDice: string;
-    amountDice: string;
-    damageTypes: DamageType[];
+    damage: Damage[];
     isMagical: boolean;
 }
 
