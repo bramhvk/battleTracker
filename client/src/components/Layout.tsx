@@ -1,5 +1,5 @@
-import { Box, Toolbar, AppBar, Typography, Link } from "@mui/material";
-import { Link as RouterLink, Outlet } from "react-router-dom";
+import {AppBar, Box, Link, Toolbar, Typography} from "@mui/material";
+import {Link as RouterLink, Outlet} from "react-router-dom";
 import React from "react";
 
 const Layout: React.FC = () => {
@@ -16,6 +16,15 @@ const Layout: React.FC = () => {
                     {/* Navigation Links */}
                     <Link
                         component={RouterLink}
+                        to="/campaigns"
+                        color="inherit"
+                        underline="hover"
+                        sx={{ cursor: "pointer" }}
+                    >
+                        Campaigns
+                    </Link>
+                    <Link
+                        component={RouterLink}
                         to="/enemies"
                         color="inherit"
                         underline="hover"
@@ -23,15 +32,24 @@ const Layout: React.FC = () => {
                     >
                         Enemies
                     </Link>
-                    {/*<Link*/}
-                    {/*    component={RouterLink}*/}
-                    {/*    to="/ocr"*/}
-                    {/*    color="inherit"*/}
-                    {/*    underline="hover"*/}
-                    {/*    sx={{ cursor: "pointer" }}*/}
-                    {/*>*/}
-                    {/*    OCR*/}
-                    {/*</Link>*/}
+                    <Link
+                        component={RouterLink}
+                        to="/player-characters"
+                        color="inherit"
+                        underline="hover"
+                        sx={{ cursor: "pointer" }}
+                    >
+                        Players
+                    </Link>
+                    <Link
+                        component={RouterLink}
+                        to="/encounters"
+                        color="inherit"
+                        underline="hover"
+                        sx={{ cursor: "pointer" }}
+                    >
+                        Encounters
+                    </Link>
                 </Toolbar>
             </AppBar>
 
