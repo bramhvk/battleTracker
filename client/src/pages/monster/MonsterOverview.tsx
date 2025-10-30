@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import MonsterDashboard from "./pages/MonsterDashboard";
+import MonsterDashboard from "./MonsterDashboard";
 import {useNavigate} from "react-router-dom";
 import {isStringEmpty} from "../../utils/validation";
 import Button from "@mui/material/Button";

@@ -1,6 +1,6 @@
 import {FormControl, FormLabel, Input} from "@mui/material";
 import {useEffect, useState} from "react";
-import {emptyGenericMonsterInfo, GenericMonsterInfo} from "../../types/Monster";
+import {emptyGenericMonsterInfo, GenericMonsterInfo} from "../../../types/monster/Monster";
 
 
 interface MonsterInfoProps {

@@ -1,5 +1,5 @@
 import {defaultMatcher} from "../Matcher";
-import {emptySenses, Senses, sensesKeys} from "../../../types/Senses";
+import {emptySenses, Senses, sensesKeys} from "../../../types/shared/Senses";
 import {findStringBlockFor, matcherThreshold, splitDistances, stripFirst} from "../ParserHelper";
 import {MAPPING_SENSES} from "./mapping/5eMapping";
 import {isStringEmpty} from "../../../utils/validation";

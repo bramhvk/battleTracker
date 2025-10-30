@@ -1,9 +1,9 @@
 import {doesStringContainValue} from "../Matcher";
 import {findStringBlockFor, matcherThreshold, stripFirst} from "../ParserHelper";
 import {proficienciesKeywords} from "./mapping/5eMapping";
-import {statKeys} from "../../../types/Stats";
+import {statKeys} from "../../../types/shared/Stats";
 import {getEnumKeys} from "../../../utils/extraction";
-import {Skill} from "../../../types/Skill";
+import {Skill} from "../../../types/shared/Skill";
 
 
 export const createProficienciesFrom = (statBlock: string[]): string[] => {

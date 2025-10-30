@@ -1,5 +1,5 @@
 import React, {forwardRef, useEffect, useRef, useState} from "react";
-import {ApplyImageChanges} from "../../shared/TextExtraction/TextExtractionComponent";
+import {ApplyImageChanges} from "../../shared/5e/TextExtraction/TextExtractionComponent";
 
 interface ContrastImageProps {
     imageData: string; // Base64 string or file URL

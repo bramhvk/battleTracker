@@ -1,12 +1,12 @@
-import {TextExtractionComponent} from "../../shared/TextExtraction/TextExtractionComponent";
-import {createMonsterFrom} from "../../../features/parsers/5e/MonsterParser";
+import {TextExtractionComponent} from "../../components/shared/5e/TextExtraction/TextExtractionComponent";
+import {createMonsterFrom} from "../../features/parsers/5e/MonsterParser";
 import {useNavigate} from "react-router-dom";
 
 interface ExtractMonsterProps {
 
 }
 
-const ExtractMonster: React.FC<ExtractMonsterProps> = () => {
+const MonsterExtract: React.FC<ExtractMonsterProps> = () => {
 
     const navigate = useNavigate();
 
@@ -19,4 +19,4 @@ const ExtractMonster: React.FC<ExtractMonsterProps> = () => {
     );
 }
 
-export default ExtractMonster;
+export default MonsterExtract;

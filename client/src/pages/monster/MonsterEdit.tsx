@@ -1,12 +1,14 @@
-import {emptyMonster, Monster} from "../../../types/Monster";
+import {emptyMonster, Monster} from "../../types/monster/Monster";
 import React, {useEffect, useState} from "react";
-import {getMonsterById} from "../../../services/MonsterService";
-import {StatBlock} from "../../shared/StatBlock";
-import {MonsterInfo} from "../../shared/MonsterInfo";
-import {useLocation} from "react-router-dom";
+import {createMonster, getMonsterById} from "../../services/MonsterService";
+import {StatBlock} from "../../components/shared/5e/StatBlock";
+import {MonsterInfo} from "../../components/shared/5e/MonsterInfo";
+import {useLocation, useNavigate} from "react-router-dom";
+import Button from "@mui/material/Button";
 
 
-const EditMonster: React.FC = () => {
+const MonsterEdit: React.FC = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const id = location.state?.id as string | undefined;
     const monster  = location.state?.monster as Monster | undefined;
@@ -26,8 +28,17 @@ const EditMonster: React.FC = () => {
         }
     )
 
+
+
     //wait for data to be loaded before the first render
     if (!data) return null;
+
+    const saveMonster = () => {
+        createMonster(data).then((monster: Monster) => {
+            console.log("saved! ",monster);
+            navigate('/enemies/')
+        })
+    }
 
     return (
         <>
@@ -35,8 +46,9 @@ const EditMonster: React.FC = () => {
             {JSON.stringify(data)}
             <MonsterInfo data={data.info} />
             <StatBlock data={data.stats} />
+            <Button onClick={saveMonster}>Save</Button>
         </>
     );
 };
 
-export default EditMonster;
+export default MonsterEdit;

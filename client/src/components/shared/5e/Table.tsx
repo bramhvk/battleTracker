@@ -1,6 +1,6 @@
 import * as React from "react";
-import { DataGrid, GridColDef } from "@mui/x-data-grid";
-import { Paper } from "@mui/material";
+import {DataGrid, GridColDef} from "@mui/x-data-grid";
+import {Paper} from "@mui/material";
 
 interface Column {
     key: string;   // supports nested keys like "movement.speed"

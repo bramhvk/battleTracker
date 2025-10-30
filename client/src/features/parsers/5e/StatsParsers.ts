@@ -1,4 +1,4 @@
-import {emptyStats, statKeys, Stats} from "../../../types/Stats";
+import {emptyStats, statKeys, Stats} from "../../../types/shared/Stats";
 import {defaultMatcher} from "../Matcher";
 import {CmpStr, MetricRaw} from "cmpstr";
 import {findBestMatchFor} from "../ParserHelper";

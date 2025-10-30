@@ -1,7 +1,7 @@
-import GenericTable from "../../shared/Table";
+import GenericTable from "../../components/shared/5e/Table";
 import React, {useEffect, useState} from "react";
-import {Monster} from "../../../types/Monster";
-import {getMonsters} from "../../../services/MonsterService";
+import {Monster} from "../../types/monster/Monster";
+import {getMonsters} from "../../services/MonsterService";
 
 interface MonsterDashboardProps {
   onClick: (id: string) => void;

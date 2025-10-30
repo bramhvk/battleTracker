@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {FormControl, FormLabel, Input} from "@mui/material";
-import {emptyStats, Stats} from "../../types/Stats";
+import {emptyStats, Stats} from "../../../types/shared/Stats";
 
 interface StatBlockProps {
     data: Stats;

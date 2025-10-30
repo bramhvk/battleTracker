@@ -90,7 +90,7 @@ export const MAPPING_CR: KeywordMap = {
 export const MAPPING_CR_FALLBACK: KeywordMap = {
     value: "Challenge",
     mappedValue: "cr",
-    options: {
+    matchOptions: {
         fMatch: (test, find) => doesStringContainValue(replaceNonAN(test), find),
         fFind: "XP",
     }
@@ -103,27 +103,37 @@ export const MAPPING_ABILITIES: KeywordMap = {
 
 export const MAPPING_ACTIONS: KeywordMap = {
     value: "ACTIONS",
-    mappedValue: "actions"
+    mappedValue: "actions",
+    requireExactLength: true
 }
 
 export const MAPPING_BONUS_ACTIONS: KeywordMap = {
     value: "BONUS ACTIONS",
-    mappedValue: "bActions"
+    mappedValue: "bActions",
+    requireExactLength: true
 }
 
 export const MAPPING_LEGENDARY_ACTIONS: KeywordMap = {
     value: "LEGENDARY ACTIONS",
-    mappedValue: "lActions"
+    mappedValue: "lActions",
+    requireExactLength: true
 }
 
 export const MAPPING_REACTIONS: KeywordMap = {
     value: "REACTIONS",
-    mappedValue: "reactions"
+    mappedValue: "reactions",
+    requireExactLength: true
 }
 
 export const MAPPING_REGIONAL_EFFECTS: KeywordMap = {
     value: "REGIONAL EFFECTS",
-    mappedValue: "rEffects"
+    mappedValue: "rEffects",
+    requireExactLength: true
+}
+
+export const MAPPING_SPELLCASTING: KeywordMap = {
+    value: "Spellcasting",
+    mappedValue: "",
 }
 
 export const STATS_ORDER: KeywordMap[] = [
@@ -152,5 +162,5 @@ export const TRAITS_ORDER: KeywordMap[] = [
     MAPPING_REGIONAL_EFFECTS
 ];
 
-export const GenericMonsterInfoKeywords: KeywordMap[] = [MAPPING_SPEED, MAPPING_AC, MAPPING_HIT_POINTS, MAPPING_HIT_DICE, MAPPING_CR, MAPPING_CR_FALLBACK];
+export const GenericMonsterInfoKeywords: KeywordMap[] = [MAPPING_SPEED, MAPPING_AC, MAPPING_HIT_POINTS, MAPPING_HIT_DICE, MAPPING_LANGUAGES, MAPPING_CR, MAPPING_CR_FALLBACK];
 export const proficienciesKeywords: KeywordMap[] = [MAPPING_SAVING_THROWS, MAPPING_SKILLS];

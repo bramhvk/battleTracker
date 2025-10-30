@@ -1,13 +1,13 @@
-import {Size} from "./Size";
-import {emptyStats, Stats} from "./Stats";
-import {DamageType} from "./DamageType";
-import {emptyMovement, Movement} from "./Movement";
-import {emptySenses, Senses} from "./Senses";
-import {Condition} from "./Condition";
-import {Trait} from "./Trait";
+import {Size} from "../shared/Size";
+import {emptyStats, Stats} from "../shared/Stats";
+import {DamageType} from "../shared/DamageType";
+import {emptyMovement, Movement} from "../shared/Movement";
+import {emptySenses, Senses} from "../shared/Senses";
+import {Condition} from "../shared/Condition";
+import {Trait} from "../shared/Trait";
+import {ID} from "../shared/Id";
 
-export interface Monster {
-    _id: string;
+export interface Monster extends ID {
     info: GenericMonsterInfo;
     stats: Stats;
     proficiencies: string[];
@@ -15,13 +15,12 @@ export interface Monster {
     immunities: DamageType[];
     resistances: DamageType[];
     conditions: Condition[];
-    languages: string;
     abilities: Trait[];
     actions: Trait[];
-    bActions: Trait[];
-    lActions: Trait[];
     reactions: Trait[];
-    rEffects: Trait[];
+    bActions: Trait[]; //bonus actions
+    lActions: Trait[]; //legendary actions
+    rEffects: Trait[]; //region effects
 }
 
 export interface GenericMonsterInfo {
@@ -62,7 +61,6 @@ export const emptyMonsterObject: Monster = {
     immunities: [],
     resistances: [],
     conditions: [],
-    languages: "",
     abilities: [],
     actions: [],
     bActions: [],

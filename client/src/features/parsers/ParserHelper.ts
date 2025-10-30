@@ -13,10 +13,11 @@ export interface ParserMatch {
 export interface KeywordMap {
     mappedValue: string;
     value: string;
-    options?: {
+    matchOptions?: {
         fMatch: (test: string, find: string) => {},
         fFind: string,
-    }
+    },
+    requireExactLength?: boolean,
 }
 
 export const emptyKeywordMap: KeywordMap = {
@@ -65,12 +66,11 @@ export const findBestMatchFor = (keyword: KeywordMap,
 
     testArrays.forEach((text, index) => {
         //perform default matching or use the one provided in the options
-        const res = !!keyword.options?.fMatch
-            ? keyword.options.fMatch(text, keyword.options?.fFind) as CmpStrResult
+        const res = !!keyword.matchOptions?.fMatch
+            ? keyword.matchOptions.fMatch(text, keyword.matchOptions?.fFind) as CmpStrResult
             : matcher.test(getTextToTest(text, substringFrom, substringUntil, keywordLength), keyword.value) as CmpStrResult;
 
-        if (res.match > bestMatchScore) {
-            // console.log(text, bestMatchScore, bestMatchIndex)
+        if (res.match > bestMatchScore && isLineLegal(text, keyword)) {
             bestMatchScore = res.match;
             bestMatchIndex = index;
         }
@@ -82,6 +82,13 @@ export const findBestMatchFor = (keyword: KeywordMap,
         match: bestMatchScore
     } as ParserMatch;
 }
+
+const isLineLegal = (line: string, keyWord: KeywordMap) => {
+    if (keyWord.requireExactLength) {
+        return keyWord.value.length === line.trim().length;
+    }
+    return true
+};
 
 export const findBestMatchInArray = (keywords: KeywordMap[],
                                      matcher: CmpStr, testArrays: string[],
@@ -143,6 +150,17 @@ export const parseForKeys = (line: string, keywordMap: KeywordMap, keys: string[
     }
 
     return results;
+}
+
+export const mergeMultiLines = (text: string[], condition: (text: string) => boolean): string[] => {
+    return text.reduce<string[]>((acc, current) => {
+        if (acc.length && !condition(current)) {
+            acc[acc.length - 1] += " " + current.trim();
+        } else {
+            acc.push(current.trim());
+        }
+        return acc;
+    }, []);
 }
 
 export const splitDistances = (line: string): string[] => {

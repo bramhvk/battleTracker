@@ -4,11 +4,11 @@ import Button from '@mui/material/Button';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 import {CircularProgress, styled} from "@mui/material";
 import {createWorker, PSM} from "tesseract.js";
-import {OCR_TYPE} from "../../../types/OcrType";
-import {isImageEmpty} from "../../../utils/validation";
-import {CropImageComponent} from "../../OCR/manipulation/CropImageComponent";
-import {SplitImageComponent} from "../../OCR/manipulation/SplitImageComponent";
-import SkewImageComponent from "../../OCR/manipulation/SkewImageComponent";
+import {OCR_TYPE} from "../../../../types/logic/OcrType";
+import {isImageEmpty} from "../../../../utils/validation";
+import {CropImageComponent} from "../../../OCR/manipulation/CropImageComponent";
+import {SplitImageComponent} from "../../../OCR/manipulation/SplitImageComponent";
+import SkewImageComponent from "../../../OCR/manipulation/SkewImageComponent";
 import {flushSync} from "react-dom";
 
 interface TextExtractionProps {
@@ -48,7 +48,6 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
 
 
     const loadFile = (file: File) => {
-        console.log(file)
         const reader = new FileReader();
         reader.onloadend = () => {
             const res = reader.result;
@@ -172,15 +171,11 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
         }
         setOcrResult(data);
         onTextExtracted(data)
-        console.log(data)
         await worker.terminate();
     };
 
     return (
         <div>
-            <div className="image-container">
-                {renderImages()}
-            </div>
             <div className="text-extraction">
                 <Button
                     component="label"
@@ -208,6 +203,9 @@ const TextExtractionComponent: React.FC<TextExtractionProps> = ({onTextExtracted
 
                 <span>{progressLabel.toUpperCase()} {imageCount} / {imageTotal}</span>
                 <CircularProgress variant={"determinate"} value={progress}/>
+            </div>
+            <div className="image-container">
+                {renderImages()}
             </div>
         </div>
     );

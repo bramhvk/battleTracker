@@ -1,9 +1,9 @@
 enum AT {
-    ROUND_START,
-    ROUND_END,
-    TURN_START,
-    TURN_END,
-    TURN_END_OF_CHAR
+    ROUND_START = "round_start",
+    ROUND_END = "round_end",
+    TURN_START = "round_start",
+    TURN_END = "round_end",
+    TURN_END_OF_CHAR = "round_end_of_char",
 }
 
 export interface Trigger {
@@ -17,5 +17,5 @@ export const emptyTrigger = {
     source: "",
     desc: "",
     dc: 0,
-    at: 0,
+    at: AT.ROUND_START,
 } as Trigger;

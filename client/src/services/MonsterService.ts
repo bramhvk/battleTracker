@@ -1,7 +1,7 @@
-import {emptyMonster, Monster} from "../types/Monster";
+import {emptyMonster, Monster} from "../types/monster/Monster";
 import {apiCall, apiCallBodied} from "./ApiService";
 
-const prefix = "api/monsters/"
+const prefix = "/api/monsters/"
 
 //TODO: Add a filterObject which specifies which keys to fetch, so we dont get all the data all the time
 export const getMonsters = () => apiCall<Monster[]>("GET", prefix, []);

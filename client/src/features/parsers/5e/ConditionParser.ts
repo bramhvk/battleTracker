@@ -1,4 +1,4 @@
-import {Condition, conditions, getConditionFrom} from "../../../types/Condition";
+import {Condition, conditions, getConditionFrom} from "../../../types/shared/Condition";
 import {findStringBlockFor, parseForKeys} from "../ParserHelper";
 import {MAPPING_CONDITIONS} from "./mapping/5eMapping";
 

@@ -1,5 +1,5 @@
 import {CmpStr} from "cmpstr";
-import {emptyGenericMonsterInfo, GenericMonsterInfo} from "../../../types/Monster";
+import {emptyGenericMonsterInfo, GenericMonsterInfo} from "../../../types/monster/Monster";
 import {
     emptyParserMatch,
     findBestMatchFor,
@@ -13,10 +13,10 @@ import {
     stripFirst
 } from "../ParserHelper";
 import {getEnumKeys} from "../../../utils/extraction";
-import {getSizeFromString, Size} from "../../../types/Size";
+import {getSizeFromString, Size} from "../../../types/shared/Size";
 import {defaultMatcher} from "../Matcher";
 import {GenericMonsterInfoKeywords, MAPPING_LANGUAGES, MAPPING_NAME} from "./mapping/5eMapping";
-import {emptyMovement, Movement, movementKeys} from "../../../types/Movement";
+import {emptyMovement, Movement, movementKeys} from "../../../types/shared/Movement";
 import {isStringEmpty} from "../../../utils/validation";
 import type {CmpStrResult} from "cmpstr/dist/types/utils/Types";
 
@@ -92,13 +92,13 @@ const determineNameIndex = (parserResult: ParserMatch[]): number => {
 type GenericMonsterInfoParserFunction = (line: string, parserMatch: ParserMatch) => any;
 
 const parseGenericMonsterInfo: Record<keyof GenericMonsterInfo, GenericMonsterInfoParserFunction> = {
-    name: (l) => l,
+    name: (l) => l.toLowerCase().trim(),
     ac: (l) => l.match(/[^\d]*([0-9]+)/)?.[1] ?? 0,
     hitPoints: (l) => l.match(/[^\d]*([0-9]+)/)?.[1] ?? 0,
     hitDice: (l) => l.match(/(?:\D*\d+\D*)(\d+)/)?.[1] ?? 0,
     movement: (l) => parseMovement(l),
     size: (_, p) => getSizeFromString(p.keyword.value) ?? 0,
-    languages: (l) => stripFirst(l, MAPPING_LANGUAGES.value.length),
+    languages: (l) => stripFirst(l, MAPPING_LANGUAGES.value.length).trim(),
     cr: (l) => l.match(/\d{1,}/)?.[0] ?? 0,
 };
 
