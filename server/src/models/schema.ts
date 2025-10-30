@@ -110,7 +110,7 @@ const PlayerCharacterSchema = new Schema({
     hitPoints: { type: Number, required: true },
     maxHitPoints: { type: Number, required: true },
     movement: { type: MovementSchema, required: true },
-    proficiency: { type: ProficiencySchema, required: true }, // Placeholder until defined
+    proficiency: { type: ProficiencySchema, required: true },
 });
 
 // --- Monster ---
@@ -156,12 +156,6 @@ export const PlayerCharacter = model<IPlayerCharacter>(
     "PlayerCharacter",
     PlayerCharacterSchema
 );
-
-export type IAttack = InferSchemaType<typeof AttackSchema>;
-export const Attack = model<IAttack>("Attack", AttackSchema);
-
-export type ISpell = InferSchemaType<typeof SpellSchema>;
-export const Spell = model<ISpell>("Spell", SpellSchema);
 
 export type IMonster = InferSchemaType<typeof MonsterSchema>;
 export const Monster = model<IMonster>("Monster", MonsterSchema);
