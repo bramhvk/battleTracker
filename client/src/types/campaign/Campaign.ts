@@ -6,3 +6,9 @@ export interface Campaign extends ID {
     encounters: Encounter[];
     players: PlayerCharacter[];
 }
+
+export const emptyCampaign = {
+    _id: "",
+    encounters: [],
+    players: [],
+} as Campaign;

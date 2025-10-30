@@ -6,3 +6,9 @@ export interface Encounter extends ID {
     monsters: Monster[];
     characters: PlayerCharacter[];
 }
+
+export const emptyEncounter = {
+    _id : "",
+    monsters : [],
+    characters : [],
+} as Encounter;

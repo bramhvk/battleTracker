@@ -28,8 +28,6 @@ import {createAbilitiesFrom} from "./AbilityParser";
 export const createMonsterFrom = (data: string[]): Monster => {
     const statBlock = [...data.filter(s => !isStringEmpty(s))]
 
-    console.log("SSSSSS", statBlock);
-
     const traitMatches = [findLastLine(statBlock, STATS_ORDER[0], true).keyword, ...TRAITS_ORDER]
         .map(k => findBestMatchFor(k, defaultMatcher(), data, true))
         .filter(p => p.match > 0.9)
@@ -50,10 +48,10 @@ export const createMonsterFrom = (data: string[]): Monster => {
         reactions: createTraitsFrom([...data], MAPPING_REACTIONS, traitMatches),
         lActions: createLegendaryActionsFrom([...data], MAPPING_LEGENDARY_ACTIONS, traitMatches),
         rEffects: createRegionalEffectFrom([...data], MAPPING_REGIONAL_EFFECTS, traitMatches),
-    };
-    console.log(traitMatches);
-    console.log(data);
-    console.log(monster);
+    } as Monster;
+    // console.log(traitMatches);
+    // console.log(data);
+    // console.log(monster);
     return monster;
 }
 

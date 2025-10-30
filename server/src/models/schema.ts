@@ -110,7 +110,7 @@ const PlayerCharacterSchema = new Schema({
     hitPoints: { type: Number, required: true },
     maxHitPoints: { type: Number, required: true },
     movement: { type: MovementSchema, required: true },
-    proficiency: { type: ProficiencySchema, required: true },
+    proficiencies: { type: [String], required: true },
 });
 
 // --- Monster ---

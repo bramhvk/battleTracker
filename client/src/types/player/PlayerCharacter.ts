@@ -1,6 +1,5 @@
-import {Movement} from "../shared/Movement";
-import {Stats} from "../shared/Stats";
-import {Proficiency} from "../shared/Proficiency";
+import {emptyMovement, Movement} from "../shared/Movement";
+import {emptyStats, Stats} from "../shared/Stats";
 import {ID} from "../shared/Id";
 
 export interface PlayerCharacter extends ID {
@@ -10,5 +9,16 @@ export interface PlayerCharacter extends ID {
     hitPoints: number;
     maxHitPoints: number;
     movement: Movement;
-    proficiency: Proficiency;
+    proficiencies: String[];
 }
+
+export const emptyPlayerCharacter = {
+    _id: "",
+    name: "",
+    stats: emptyStats,
+    ac: 0,
+    hitPoints: 0,
+    maxHitPoints: 0,
+    movement: emptyMovement,
+    proficiencies: []
+} as PlayerCharacter;
