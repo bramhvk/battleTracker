@@ -1,5 +1,5 @@
 import {Request, Response} from "express";
-import Monster from "../models/monster";
+import {Monster} from "../models/schema";
 
 export const getMonsters = async (_req: Request, res: Response) => {
     const monsters = await Monster.find();
@@ -18,7 +18,8 @@ export const getMonsterById = async (req: Request, res: Response) => {
 
 export const createMonster = async (req: Request, res: Response) => {
     try {
-        const monster = await Monster.create(req.body);
+        const { _id, ...monsterData } = req.body; // ignore any _id
+        const monster = await Monster.create(monsterData);
         res.status(201).json(monster);
     } catch (err) {
         res.status(500).json({ error: err });
