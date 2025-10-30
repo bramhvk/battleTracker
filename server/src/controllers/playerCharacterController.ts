@@ -18,8 +18,8 @@ export const getPlayerCharacterById = async (req: Request, res: Response) => {
 
 export const createPlayerCharacter = async (req: Request, res: Response) => {
     try {
-        const { _id, ...PlayerCharacterData } = req.body; // ignore any _id
-        const playerCharacter = await PlayerCharacter.create(PlayerCharacterData);
+        const { _id, ...data } = req.body; // ignore any _id
+        const playerCharacter = await PlayerCharacter.create(data);
         res.status(201).json(playerCharacter);
     } catch (err) {
         res.status(500).json({ error: err });

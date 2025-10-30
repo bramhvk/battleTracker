@@ -18,8 +18,8 @@ export const getEncounterById = async (req: Request, res: Response) => {
 
 export const createEncounter = async (req: Request, res: Response) => {
     try {
-        const { _id, ...monsterData } = req.body; // ignore any _id
-        const encounter = await Encounter.create(monsterData);
+        const { _id, ...data } = req.body; // ignore any _id
+        const encounter = await Encounter.create(data);
         res.status(201).json(encounter);
     } catch (err) {
         res.status(500).json({ error: err });
