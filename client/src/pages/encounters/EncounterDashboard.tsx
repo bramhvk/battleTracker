@@ -1,3 +1,5 @@
+const EncounterDashboard: React.FC = () => {
+    return (<></>);
+}
 
-
-interface EncounterDashboardProps {}
+export default EncounterDashboard;
