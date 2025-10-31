@@ -11,7 +11,7 @@ const MonsterExtract: React.FC<ExtractMonsterProps> = () => {
     const navigate = useNavigate();
 
     const handleExtractedMonster = (imageData: string[]) => {
-        navigate('/enemies/edit', {state: {monster: createMonsterFrom(imageData), imageData}})
+        navigate('/monsters/edit', {state: {monster: createMonsterFrom(imageData), imageData}})
     }
 
     return (

@@ -1,14 +1,14 @@
 import {ID} from "../shared/Id";
-import {Monster} from "../monster/Monster";
-import {PlayerCharacter} from "../player/PlayerCharacter";
 
 export interface Encounter extends ID {
-    monsters: Monster[];
-    characters: PlayerCharacter[];
+    name: string,
+    monsters: ID[];
+    players: ID[];
 }
 
 export const emptyEncounter = {
     _id : "",
+    name: "",
     monsters : [],
-    characters : [],
+    players : [],
 } as Encounter;

@@ -20,7 +20,7 @@ export const createLegendaryActionsFrom = (lines: string[], keywordMap: KeywordM
             return {
                 name: res?.groups?.name,
                 text: res?.groups?.text,
-                cost: res?.groups?.cost,
+                cost: res?.groups?.cost ?? 0,
             } as LegendaryAction
         })
 

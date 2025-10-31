@@ -1,6 +1,5 @@
-import {InferSchemaType, model, Schema} from "mongoose";
+import {InferSchemaType, model, Schema, Types} from "mongoose";
 import {AT, AttackRange, DamageType, Size, Skill} from "./enum";
-
 
 export const TriggerSchema = new Schema({
     source: { type: String, required: true },
@@ -99,7 +98,7 @@ const GenericMonsterInfoSchema = new Schema({
 
 const LegendaryActionSchema = new Schema({
     ...TraitSchema.obj,
-    cost: { type: String, required: true },
+    cost: { type: String },
 });
 
 // --- PlayerCharacter ---
@@ -140,14 +139,15 @@ const MonsterSchema = new Schema({
 
 // --- Encounter ---
 const EncounterSchema = new Schema({
-    monsters: { type: [MonsterSchema], required: true },
-    characters: { type: [PlayerCharacterSchema], required: true },
+    monsters: { type: [Types.ObjectId], required: true },
+    players: { type: [Types.ObjectId], required: true },
 });
 
 // --- Campaign ---
 const CampaignSchema = new Schema({
-    encounters: { type: [EncounterSchema], default: [] },
-    players: { type: [PlayerCharacterSchema], default: [] },
+    name: { type: String, required: true},
+    encounters: { type: [Types.ObjectId], default: [] },
+    players: { type: [Types.ObjectId], default: [] },
 });
 
 // --- Types and Models ---

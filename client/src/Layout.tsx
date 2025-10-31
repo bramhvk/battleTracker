@@ -25,12 +25,12 @@ const Layout: React.FC = () => {
                     </Link>
                     <Link
                         component={RouterLink}
-                        to="/enemies"
+                        to="/monsters"
                         color="inherit"
                         underline="hover"
                         sx={{ cursor: "pointer" }}
                     >
-                        Enemies
+                        Monsters
                     </Link>
                     <Link
                         component={RouterLink}

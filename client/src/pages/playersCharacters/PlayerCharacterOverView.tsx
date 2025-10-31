@@ -2,6 +2,7 @@ import {isStringEmpty} from "../../utils/validation";
 import Button from "@mui/material/Button";
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+import PlayerCharacterDashboard from "./PlayerCharacterDashboard";
 
 const PlayerCharacterOverview: React.FC = () => {
 
@@ -11,7 +12,8 @@ const PlayerCharacterOverview: React.FC = () => {
     return (
         <div>
             PLAYER CHARACTERS
-            <Button onClick={() => navigate('/player-characters/create')}>create Player</Button>
+            <PlayerCharacterDashboard onClick={setSelectedId} />
+            <Button onClick={() => navigate('/player-characters/edit')}>create Player</Button>
             <Button onClick={() => navigate('/player-characters/edit', {state: {selectedId}})} sx={{ display: isStringEmpty(selectedId) ? "none" : "inline-flex" }}>Edit Player</Button>
         </div>
     )

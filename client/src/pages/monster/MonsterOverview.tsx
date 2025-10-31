@@ -12,8 +12,8 @@ const MonsterOverview: React.FC = () => {
     return (
         <div>
             <MonsterDashboard onClick={setSelectedId} />
-            <Button onClick={() => navigate('/enemies/extract')}>Add Monster</Button>
-            <Button onClick={() => navigate('/enemies/edit', {state: {selectedId}})} sx={{ display: isStringEmpty(selectedId) ? "none" : "inline-flex" }}>Edit Monster</Button>
+            <Button onClick={() => navigate('/monsters/extract')}>Add Monster</Button>
+            <Button onClick={() => navigate('/monsters/edit', {state: {selectedId}})} sx={{ display: isStringEmpty(selectedId) ? "none" : "inline-flex" }}>Edit Monster</Button>
         </div>
     );
 }

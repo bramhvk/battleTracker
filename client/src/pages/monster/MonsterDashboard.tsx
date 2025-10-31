@@ -14,15 +14,15 @@ const MonsterDashboard: React.FC<MonsterDashboardProps> = ({onClick}) => {
     useEffect(() => {getMonsters().then(setData)}, [])
 
     const cols = [
-        { key: "name", label: "Name" },
-        { key: "ac", label: "AC" },
-        { key: "hitDice", label: "Hit Dice" },
+        { key: "info.name", label: "Name" },
+        { key: "info.ac", label: "AC" },
+        { key: "info.hiyPoints", label: "Hit Points" },
         { key: "resistances", label: "Resistances" },
         { key: "immunities", label: "Immunities" },
-        { key: "movement.speed", label: "Speed" },
-        { key: "movement.swim", label: "Swim" },
-        { key: "movement.fly", label: "Fly" },
-        { key: "movement.burrow", label: "Burrow" },
+        { key: "info.movement.speed", label: "Speed" },
+        { key: "info.movement.swim", label: "Swim" },
+        { key: "info.movement.fly", label: "Fly" },
+        { key: "info.movement.burrow", label: "Burrow" },
     ];
 
 

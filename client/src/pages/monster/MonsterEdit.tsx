@@ -36,7 +36,7 @@ const MonsterEdit: React.FC = () => {
     const saveMonster = () => {
         createMonster(data).then((monster: Monster) => {
             console.log("saved! ",monster);
-            navigate('/enemies/')
+            navigate('/monsters/')
         })
     }
 
