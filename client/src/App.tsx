@@ -10,6 +10,7 @@ import PlayerCharacterOverview from "./pages/playersCharacters/PlayerCharacterOv
 import EncounterEdit from "./pages/encounters/EncounterEdit";
 import CampaignEdit from "./pages/campaigns/CampaignEdit";
 import PlayerCharacterEdit from "./pages/playersCharacters/PlayerCharacterEdit";
+import BattleTracker from "./pages/battleTracker/BattleTracker";
 
 function App() {
 
@@ -32,6 +33,8 @@ function App() {
                     <Route path="/encounters" element={<EncounterOverview />} />
                     <Route path="/encounters/create" element={<EncounterEdit />} />
                     <Route path="/encounters/edit" element={<EncounterEdit />} />
+
+                    <Route path="/battle-tracker" element={<BattleTracker />} />
                 </Route>
             </Routes>
         </BrowserRouter>

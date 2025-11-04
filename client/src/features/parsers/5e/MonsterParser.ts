@@ -32,9 +32,13 @@ export const createMonsterFrom = (data: string[]): Monster => {
         .map(k => findBestMatchFor(k, defaultMatcher(), data, true))
         .filter(p => p.match > 0.9)
 
+    // const gInfo =
+    const {name, ...info} = createGenericMonsterInfoFrom([...statBlock])
+
     const monster = {
         ...emptyMonsterObject,
-        info: createGenericMonsterInfoFrom([...statBlock]),
+        name,
+        info,
         stats: createStatsFrom([...statBlock]),
         proficiencies: createProficienciesFrom([...statBlock]),
         senses: createSensesFrom([...statBlock]),

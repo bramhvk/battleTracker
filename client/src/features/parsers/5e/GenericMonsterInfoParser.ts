@@ -32,7 +32,7 @@ export const createGenericMonsterInfoFrom = (statBlock: string[]): GenericMonste
     //the size is always before any of the generic info, so we check less lines
     parserResult.push({...determineSize(statBlock, matcher, parserResult)})
     parserResult.push({keyword: MAPPING_NAME, match: 1, index: determineNameIndex(parserResult)})
-    // parserResult.push() todo: push challenge rating with backups
+
     parserResult.forEach((res) => {
         const key = res.keyword.mappedValue as keyof GenericMonsterInfo
         (parsedGenericInfo[key] as any) = parseGenericMonsterInfo[key](statBlock[res.index], res);

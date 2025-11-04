@@ -54,6 +54,7 @@ export const emptyGenericMonsterInfo: GenericMonsterInfo = {...emptyGenericMonst
 
 export const emptyMonsterObject: Monster = {
     _id: "",
+    name: "",
     info: emptyGenericMonsterInfo,
     stats: emptyStats,
     proficiencies: [],

@@ -17,10 +17,6 @@ export const MonsterInfo: React.FC<MonsterInfoProps> = ({data, providedText}) =>
     return (
         <div>
             <FormControl>
-                <FormLabel>Name</FormLabel>
-                <Input placeholder="Name" value={genericMonsterInfo.name} type={"string"} onChange={(e) => setGenericMonsterInfo({...genericMonsterInfo, name: e.target.value})} />
-            </FormControl>
-            <FormControl>
                 <FormLabel>AC</FormLabel>
                 <Input placeholder="AC" value={genericMonsterInfo.ac} type={"number"} onChange={(e) => setGenericMonsterInfo({...genericMonsterInfo, ac: Number(e.target.value)})}/>
             </FormControl>

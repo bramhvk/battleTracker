@@ -16,12 +16,9 @@ const MonsterDashboard: React.FC<MonsterDashboardProps> = ({onClick}) => {
 
     const columns: GridColDef[] = [
         {
-            field: "info.name",
+            field: "name",
             headerName: "Name",
             flex: 1,
-            renderCell: (params) => {
-                return (params.row.info.name);
-            },
         },
         {
             field: "info.ac",

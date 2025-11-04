@@ -86,7 +86,6 @@ const ProficiencySchema = new Schema({
 
 
 const GenericMonsterInfoSchema = new Schema({
-    name: { type: String, required: true },
     ac: { type: Number, required: true },
     hitPoints: { type: Number, required: true },
     hitDice: { type: Number, required: true },
@@ -114,6 +113,7 @@ const PlayerCharacterSchema = new Schema({
 
 // --- Monster ---
 const MonsterSchema = new Schema({
+    name: { type: String, required: true },
     info: { type: GenericMonsterInfoSchema, required: true },
     stats: { type: StatsSchema, required: true },
     proficiencies: { type: [String], required: true },
@@ -139,6 +139,7 @@ const MonsterSchema = new Schema({
 
 // --- Encounter ---
 const EncounterSchema = new Schema({
+    name: { type: String, required: true },
     monsters: { type: [Types.ObjectId], required: true },
     players: { type: [Types.ObjectId], required: true },
 });
@@ -152,10 +153,7 @@ const CampaignSchema = new Schema({
 
 // --- Types and Models ---
 export type IPlayerCharacter = InferSchemaType<typeof PlayerCharacterSchema>;
-export const PlayerCharacter = model<IPlayerCharacter>(
-    "PlayerCharacter",
-    PlayerCharacterSchema
-);
+export const PlayerCharacter = model<IPlayerCharacter>("PlayerCharacter", PlayerCharacterSchema);
 
 export type IMonster = InferSchemaType<typeof MonsterSchema>;
 export const Monster = model<IMonster>("Monster", MonsterSchema);

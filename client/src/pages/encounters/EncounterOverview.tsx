@@ -13,7 +13,7 @@ const EncounterOverview: React.FC = () => {
     return (
         <div>
             ENCOUNTERS
-            <EncounterDashboard onClick={setSelectedId} onButtonClick={id => navigate(`/battle-tracker/${id}`)}/>
+            <EncounterDashboard onClick={setSelectedId} onButtonClick={id => navigate(`/battle-tracker`, {state: {id}})}/>
             <Button onClick={() => navigate('/encounters/edit')}>create Player</Button>
             <Button onClick={() => navigate('/encounters/edit', {state: {selectedId}})} sx={{ display: isStringEmpty(selectedId) ? "none" : "inline-flex" }}>Edit Player</Button>
         </div>

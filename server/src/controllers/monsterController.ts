@@ -16,6 +16,17 @@ export const getMonsterById = async (req: Request, res: Response) => {
     }
 };
 
+export const getMonstersForIds = async (req: Request, res: Response) => {
+    try {
+        // @ts-ignore
+        const monsters = Promise.all((req.params.ids as string[]).map(id => Monster.findById(id)));
+        if (!monsters) return res.status(404).json({ error: "Could not find PlayerCharacter by ID: " + req.params.id });
+        res.json(monsters);
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
+};
+
 export const createMonster = async (req: Request, res: Response) => {
     try {
         const { _id, ...monsterData } = req.body; // ignore any _id

@@ -1,5 +1,6 @@
 import {emptyMonster, Monster} from "../types/monster/Monster";
 import {apiCall, apiCallBodied} from "./ApiService";
+import {ID} from "../types/shared/Id";
 
 const prefix = "/api/monsters/"
 
@@ -7,6 +8,8 @@ const prefix = "/api/monsters/"
 export const getMonsters = () => apiCall<Monster[]>("GET", prefix, []);
 
 export const getMonsterById = (id: string) => apiCall<Monster>("GET", prefix + `${id}`, emptyMonster)
+
+export const getMonstersForIds = (ids: ID[]) => apiCall<Monster[]>("GET", prefix + "?ids=" + ids.map(id => encodeURIComponent(id._id)).join("&"), [])
 
 export const createMonster = (monster: Monster) => apiCallBodied<Monster, Partial<Monster>>("POST", prefix, monster, emptyMonster);
 

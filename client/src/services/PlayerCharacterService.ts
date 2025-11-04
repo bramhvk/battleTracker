@@ -1,5 +1,6 @@
 import {emptyPlayerCharacter, PlayerCharacter} from "../types/player/PlayerCharacter";
 import {apiCall, apiCallBodied} from "./ApiService";
+import {ID} from "../types/shared/Id";
 
 const prefix = "/api/player-characters/"
 
@@ -7,6 +8,8 @@ const prefix = "/api/player-characters/"
 export const getPlayerCharacters = () => apiCall<PlayerCharacter[]>("GET", prefix, []);
 
 export const getPlayerCharacterById = (id: string) => apiCall<PlayerCharacter>("GET", prefix + `${id}`, emptyPlayerCharacter)
+
+export const getPlayerCharactersForIds = (ids: ID[]) => apiCall<PlayerCharacter[]>("GET", prefix + "?ids=" + ids.map(id => encodeURIComponent(id._id)).join("&"), [])
 
 export const createPlayerCharacter = (monster: PlayerCharacter) => apiCallBodied<PlayerCharacter, Partial<PlayerCharacter>>("POST", prefix, monster, emptyPlayerCharacter);
 

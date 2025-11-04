@@ -1,7 +1,6 @@
 import {ID} from "../shared/Id";
 
 export interface Campaign extends ID {
-    name: string;
     encounters: ID[];
     players: ID[];
 }

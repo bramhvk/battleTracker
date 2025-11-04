@@ -29,6 +29,11 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({onClick, onButto
 
     const columns: GridColDef[] = [
         {
+            field: "name",
+            headerName: "name",
+            flex: 2,
+        },
+        {
             field: "players",
             headerName: "Players",
             flex: 6,
@@ -48,7 +53,7 @@ const EncounterDashboard: React.FC<EncounterDashboardProps> = ({onClick, onButto
                 return params.row.monsters.map((p: string) => {
                     return monsters
                         .filter(m => m._id === p)
-                        .map(m => m.info.name);
+                        .map(m => m.name);
                 }).join(", ");
             }
         },

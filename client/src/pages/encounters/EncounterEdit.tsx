@@ -72,14 +72,14 @@ const EncounterEdit: React.FC = () => {
                         renderValue={(selected) =>
                             monsters
                                 .filter((e) => selected.includes(e._id))
-                                .map((e) => e.info.name)
+                                .map((e) => e.name)
                                 .join(", ")
                         }
                     >
                         {monsters.map((monster) => (
                             <MenuItem key={monster._id} value={monster._id}>
                                 <Checkbox checked={selectedMonsters.includes(monster._id)}/>
-                                <ListItemText primary={monster.info.name}/>
+                                <ListItemText primary={monster.name}/>
                             </MenuItem>
                         ))}
                     </Select>

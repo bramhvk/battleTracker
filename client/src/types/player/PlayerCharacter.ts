@@ -3,7 +3,6 @@ import {emptyStats, Stats} from "../shared/Stats";
 import {ID} from "../shared/Id";
 
 export interface PlayerCharacter extends ID {
-    name: string;
     stats: Stats;
     ac: number;
     hitPoints: number;

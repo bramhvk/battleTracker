@@ -16,6 +16,17 @@ export const getPlayerCharacterById = async (req: Request, res: Response) => {
     }
 };
 
+export const getPlayerCharactersForIds = async (req: Request, res: Response) => {
+    try {
+        // @ts-ignore
+        const playerCharacters = Promise.all((req.params.ids as string[]).map(id => PlayerCharacter.findById(id)));
+        if (!playerCharacters) return res.status(404).json({ error: "Could not find PlayerCharacter by ID: " + req.params.id });
+        res.json(playerCharacters);
+    } catch (err) {
+        res.status(500).json({ error: err });
+    }
+};
+
 export const createPlayerCharacter = async (req: Request, res: Response) => {
     try {
         const { _id, ...data } = req.body; // ignore any _id
