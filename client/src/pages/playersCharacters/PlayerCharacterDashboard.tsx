@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {PlayerCharacter} from "../../types/player/PlayerCharacter";
 import {getPlayerCharacters} from "../../services/PlayerCharacterService";
-import GenericTable from "../../components/shared/5e/Table";
+import TableComponent from "../../components/shared/Table";
 
 
 interface PlayerCharacterDashboardProps {
@@ -14,14 +14,30 @@ const PlayerCharacterDashboard: React.FC<PlayerCharacterDashboardProps> = ({onCl
 
     useEffect(() => {getPlayerCharacters().then(setData)}, []);
 
-    const cols = [
-        { key: "name", label: "Name" },
-        { key: "ac", label: "AC" },
-        { key: "hitPoints", label: "Hit Points" },
-        { key: "maxHitPoints", label: "Max hit points" },
+    const columns = [
+        {
+            field: "name",
+            headerName: "Name",
+            flex: 1
+        },
+        {
+            field: "ac",
+            headerName: "AC",
+            flex: 1
+        },
+        {
+            field: "hitPoints",
+            headerName: "Hit Points",
+            flex: 1
+        },
+        {
+            field: "maxHitPoints",
+            headerName: "Max hit points",
+            flex: 1
+        },
     ];
 
-    return (<GenericTable data={data} cols={cols} onClick={onClick} />);
+    return (<TableComponent data={data} columns={columns} onRowClick={onClick} />);
 }
 
 export default PlayerCharacterDashboard;

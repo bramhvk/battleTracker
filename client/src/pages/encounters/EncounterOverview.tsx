@@ -9,10 +9,11 @@ const EncounterOverview: React.FC = () => {
     const navigate = useNavigate();
     const [selectedId, setSelectedId] = useState('')
 
+
     return (
         <div>
             ENCOUNTERS
-            <EncounterDashboard onClick={setSelectedId}/>
+            <EncounterDashboard onClick={setSelectedId} onButtonClick={id => navigate(`/battle-tracker/${id}`)}/>
             <Button onClick={() => navigate('/encounters/edit')}>create Player</Button>
             <Button onClick={() => navigate('/encounters/edit', {state: {selectedId}})} sx={{ display: isStringEmpty(selectedId) ? "none" : "inline-flex" }}>Edit Player</Button>
         </div>

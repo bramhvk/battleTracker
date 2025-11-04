@@ -1,7 +1,8 @@
-import GenericTable from "../../components/shared/5e/Table";
 import React, {useEffect, useState} from "react";
 import {Monster} from "../../types/monster/Monster";
 import {getMonsters} from "../../services/MonsterService";
+import TableComponent from "../../components/shared/Table";
+import {GridColDef} from "@mui/x-data-grid";
 
 interface MonsterDashboardProps {
   onClick: (id: string) => void;
@@ -13,20 +14,83 @@ const MonsterDashboard: React.FC<MonsterDashboardProps> = ({onClick}) => {
 
     useEffect(() => {getMonsters().then(setData)}, [])
 
-    const cols = [
-        { key: "info.name", label: "Name" },
-        { key: "info.ac", label: "AC" },
-        { key: "info.hiyPoints", label: "Hit Points" },
-        { key: "resistances", label: "Resistances" },
-        { key: "immunities", label: "Immunities" },
-        { key: "info.movement.speed", label: "Speed" },
-        { key: "info.movement.swim", label: "Swim" },
-        { key: "info.movement.fly", label: "Fly" },
-        { key: "info.movement.burrow", label: "Burrow" },
+    const columns: GridColDef[] = [
+        {
+            field: "info.name",
+            headerName: "Name",
+            flex: 1,
+            renderCell: (params) => {
+                return (params.row.info.name);
+            },
+        },
+        {
+            field: "info.ac",
+            headerName: "AC",
+            flex: 1,
+            renderCell: (params) => {
+                return (params.row.info.ac);
+            }
+        },
+        {
+            field: "info.hitPoints",
+            headerName: "Hit Points",
+            flex: 1,
+            renderCell: (params) => {
+                return (params.row.info.hitPoints);
+            }
+        },
+        {
+            field: "resistances",
+            headerName: "Resistances",
+            flex: 2,
+            renderCell: (params) => {
+                return params.row.resistances.join(" ")
+            }
+        },
+        {
+            field: "immunities",
+            headerName: "Immunities",
+            flex: 2,
+            renderCell: (params) => {
+                return params.row.immunities.join(" ")
+            }
+        },
+        {
+            field: "info.movement.speed",
+            headerName: "Speed",
+            flex: 1,
+            renderCell: (params) => {
+                return (params.row.info.movement.speed);
+            }
+        },
+        {
+            field: "info.movement.swim",
+            headerName: "Swim",
+            flex: 1,
+            renderCell: (params) => {
+                return (params.row.info.movement.swim);
+            }
+        },
+        {
+            field: "info.movement.fly",
+            headerName: "Fly",
+            flex: 1,
+            renderCell: (params) => {
+                return (params.row.info.movement.fly);
+            }
+        },
+        {
+            field: "info.movement.burrow",
+            headerName: "Burrow",
+            flex: 1,
+            renderCell: (params) => {
+                return (params.row.info.movement.burrow);
+            }
+        },
     ];
 
 
-    return (<GenericTable data={data} cols={cols} onClick={onClick} />);
+    return (<TableComponent data={data} columns={columns} onRowClick={onClick} />);
 }
 
 export default MonsterDashboard;

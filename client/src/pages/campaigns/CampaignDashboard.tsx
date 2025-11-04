@@ -1,7 +1,8 @@
 import React, {useEffect, useState} from "react";
 import {getCampaigns} from "../../services/CampaignService";
-import GenericTable from "../../components/shared/5e/Table";
 import {Campaign} from "../../types/campaign/Campaign";
+import TableComponent from "../../components/shared/Table";
+import {GridColDef} from "@mui/x-data-grid";
 
 
 interface CampaignDashboardProps {
@@ -14,11 +15,15 @@ const CampaignDashboard: React.FC<CampaignDashboardProps> = ({onClick}) => {
 
     useEffect(() => {getCampaigns().then(setData)}, []);
 
-    const cols = [
-        { key: "name", label: "Name" },
+    const columns: GridColDef[] = [
+        {
+            field: "name",
+            headerName: "Name",
+            flex: 1,
+        },
     ];
 
-    return (<GenericTable data={data} cols={cols} onClick={onClick} />);
+    return (<TableComponent data={data} columns={columns} onRowClick={onClick} />);
 }
 
 export default CampaignDashboard;
