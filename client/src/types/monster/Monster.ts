@@ -53,7 +53,7 @@ const emptyGenericMonsterInfoObject: GenericMonsterInfo = {
 export const emptyGenericMonsterInfo: GenericMonsterInfo = {...emptyGenericMonsterInfoObject}
 
 export const emptyMonsterObject: Monster = {
-    _id: "",
+    _id: "", // add random uuid placeholder
     name: "",
     info: emptyGenericMonsterInfo,
     stats: emptyStats,

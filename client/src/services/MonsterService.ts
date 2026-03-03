@@ -13,7 +13,7 @@ export const getMonstersForIds = (ids: ID[]) => apiCall<Monster[]>("GET", prefix
 
 export const createMonster = (monster: Monster) => apiCallBodied<Monster, Partial<Monster>>("POST", prefix, monster, emptyMonster);
 
-export const updateMonster = (id: string, monster: Monster) => apiCallBodied<Monster, Partial<Monster>>("PUT", prefix, monster, emptyMonster);
+export const updateMonster = (monster: Monster) => apiCallBodied<Monster, Partial<Monster>>("PUT", prefix, monster, emptyMonster);
 
 export const deleteMonster = (id: string) => apiCall<Monster>("DELETE", prefix + `${id}`, emptyMonster);
 

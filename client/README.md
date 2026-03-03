@@ -1,3 +1,8 @@
+## Install frontend
+
+* npm i
+* npm i sass
+
 ## Run frontend
 
 * move to client directory</br>`cd client`

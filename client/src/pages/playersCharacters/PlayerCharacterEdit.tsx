@@ -54,7 +54,7 @@ const PlayerCharacterEdit: React.FC<PlayerCharacterCreateProps> = () => {
             </FormControl>
             <FormControl>
                 <FormLabel>Stats</FormLabel>
-                <StatBlock data={data.stats} />
+                <StatBlock data={data.stats} onChange={updated => {}} />
             </FormControl>
             <FormControl>
                 <FormLabel>Hit Points</FormLabel>

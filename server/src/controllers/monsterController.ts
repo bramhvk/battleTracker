@@ -39,7 +39,7 @@ export const createMonster = async (req: Request, res: Response) => {
 
 export const updateMonster = async (req: Request, res: Response) => {
     try {
-        const monster = await Monster.findByIdAndUpdate(req.params.id, req.body, {
+        const monster = await Monster.findByIdAndUpdate(req.body._id, req.body, {
             new: true,
         });
         if (!monster) return res.status(404).json({ error: "Could not find monster by ID: " + req.params.id });

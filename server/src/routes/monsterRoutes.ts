@@ -12,10 +12,10 @@ import {
 const router = Router();
 
 router.post('/', createMonster);
+router.put('/', updateMonster);
 router.get('/', getMonsters);
 router.get('/:id', getMonsterById);
 router.get('/:ids', getMonstersForIds);
-router.put('/:id', updateMonster);
 router.delete('/:id', deleteMonster);
 
 export default router;
