@@ -35,6 +35,9 @@ export const createMonsterFrom = (data: string[]): Monster => {
     // const gInfo =
     const {name, ...info} = createGenericMonsterInfoFrom([...statBlock])
 
+    console.log("text", statBlock)
+    console.log("traits order", traitMatches)
+
     const monster = {
         ...emptyMonsterObject,
         name,

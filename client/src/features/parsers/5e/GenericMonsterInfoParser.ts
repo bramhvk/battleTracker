@@ -1,5 +1,4 @@
 import {CmpStr} from "cmpstr";
-import {emptyGenericMonsterInfo, GenericMonsterInfo} from "../../../types/monster/Monster";
 import {
     emptyParserMatch,
     findBestMatchFor,
@@ -19,12 +18,13 @@ import {GenericMonsterInfoKeywords, MAPPING_LANGUAGES, MAPPING_NAME} from "./map
 import {emptyMovement, Movement, movementKeys} from "../../../types/shared/Movement";
 import {isStringEmpty} from "../../../utils/validation";
 import type {CmpStrResult} from "cmpstr/dist/types/utils/Types";
+import {emptyGenericInfo, GenericInfo} from "../../../types/shared/GenericInfo";
 
 
-export const createGenericMonsterInfoFrom = (statBlock: string[]): GenericMonsterInfo => {
+export const createGenericMonsterInfoFrom = (statBlock: string[]): GenericInfo => {
     const matcher = defaultMatcher();
     const parserResult: ParserMatch[] = [];
-    const parsedGenericInfo = emptyGenericMonsterInfo;
+    const parsedGenericInfo = emptyGenericInfo;
 
     //get the genericMonsterInfo
     GenericMonsterInfoKeywords.forEach((key) => parserResult.push(findBestMatchFor(key, matcher, statBlock, true)));
@@ -34,7 +34,7 @@ export const createGenericMonsterInfoFrom = (statBlock: string[]): GenericMonste
     parserResult.push({keyword: MAPPING_NAME, match: 1, index: determineNameIndex(parserResult)})
 
     parserResult.forEach((res) => {
-        const key = res.keyword.mappedValue as keyof GenericMonsterInfo
+        const key = res.keyword.mappedValue as keyof GenericInfo
         (parsedGenericInfo[key] as any) = parseGenericMonsterInfo[key](statBlock[res.index], res);
     })
 
@@ -91,7 +91,7 @@ const determineNameIndex = (parserResult: ParserMatch[]): number => {
 
 type GenericMonsterInfoParserFunction = (line: string, parserMatch: ParserMatch) => any;
 
-const parseGenericMonsterInfo: Record<keyof GenericMonsterInfo, GenericMonsterInfoParserFunction> = {
+const parseGenericMonsterInfo: Record<keyof GenericInfo, GenericMonsterInfoParserFunction> = {
     name: (l) => l.toLowerCase().trim(),
     ac: (l) => l.match(/[^\d]*([0-9]+)/)?.[1] ?? 0,
     hitPoints: (l) => l.match(/[^\d]*([0-9]+)/)?.[1] ?? 0,

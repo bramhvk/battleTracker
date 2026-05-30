@@ -97,7 +97,7 @@ export const MAPPING_CR_FALLBACK: KeywordMap = {
 }
 
 export const MAPPING_ABILITIES: KeywordMap = {
-    value: "",
+    value: "Traits",
     mappedValue: "abilities"
 }
 
