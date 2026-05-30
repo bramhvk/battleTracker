@@ -11,9 +11,9 @@ export const getPlayerCharacterById = (id: string) => apiCall<PlayerCharacter>("
 
 export const getPlayerCharactersForIds = (ids: ID[]) => apiCall<PlayerCharacter[]>("GET", prefix + "?ids=" + ids.map(id => encodeURIComponent(id._id)).join("&"), [])
 
-export const createPlayerCharacter = (monster: PlayerCharacter) => apiCallBodied<PlayerCharacter, Partial<PlayerCharacter>>("POST", prefix, monster, emptyPlayerCharacter);
+export const createPlayerCharacter = (pc: PlayerCharacter) => apiCallBodied<PlayerCharacter, Partial<PlayerCharacter>>("POST", prefix, pc, emptyPlayerCharacter);
 
-export const updatePlayerCharacter = (id: string, monster: PlayerCharacter) => apiCallBodied<PlayerCharacter, Partial<PlayerCharacter>>("PUT", prefix, monster, emptyPlayerCharacter);
+export const updatePlayerCharacter = (pc: PlayerCharacter) => apiCallBodied<PlayerCharacter, Partial<PlayerCharacter>>("PUT", prefix, pc, emptyPlayerCharacter);
 
 export const deletePlayerCharacter = (id: string) => apiCall<PlayerCharacter>("DELETE", prefix + `${id}`, emptyPlayerCharacter);
 

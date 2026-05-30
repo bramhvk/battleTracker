@@ -1,14 +1,13 @@
-import {Size} from "../shared/Size";
 import {emptyStats, Stats} from "../shared/Stats";
 import {DamageType} from "../shared/DamageType";
-import {emptyMovement, Movement} from "../shared/Movement";
 import {emptySenses, Senses} from "../shared/Senses";
 import {Condition} from "../shared/Condition";
 import {Trait} from "../shared/Trait";
 import {ID} from "../shared/Id";
+import {emptyGenericInfo, GenericInfo} from "../shared/GenericInfo";
 
 export interface Monster extends ID {
-    info: GenericMonsterInfo;
+    info: GenericInfo;
     stats: Stats;
     proficiencies: string[];
     senses: Senses;
@@ -23,39 +22,15 @@ export interface Monster extends ID {
     rEffects: Trait[]; //region effects
 }
 
-export interface GenericMonsterInfo {
-    name: string;
-    ac: number;
-    hitPoints: number;
-    hitDice: number;
-    movement: Movement;
-    size: Size,
-    languages: string,
-    cr: number;
-}
-
 export const isEmpty = (monster: Monster): boolean => {
     console.log(JSON.stringify(monster) === JSON.stringify(emptyMonster))
     return JSON.stringify(monster) === JSON.stringify(emptyMonster);
 }
 
-const emptyGenericMonsterInfoObject: GenericMonsterInfo = {
-    name: "",
-    ac: 0,
-    hitDice: 0,
-    hitPoints: 0,
-    movement: emptyMovement,
-    size: Size.MEDIUM,
-    languages: "",
-    cr: 0,
-}
-
-export const emptyGenericMonsterInfo: GenericMonsterInfo = {...emptyGenericMonsterInfoObject}
-
 export const emptyMonsterObject: Monster = {
     _id: "", // add random uuid placeholder
     name: "",
-    info: emptyGenericMonsterInfo,
+    info: emptyGenericInfo,
     stats: emptyStats,
     proficiencies: [],
     senses: emptySenses,

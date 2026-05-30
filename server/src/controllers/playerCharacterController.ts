@@ -39,7 +39,7 @@ export const createPlayerCharacter = async (req: Request, res: Response) => {
 
 export const updatePlayerCharacter = async (req: Request, res: Response) => {
     try {
-        const playerCharacter = await PlayerCharacter.findByIdAndUpdate(req.params.id, req.body, {
+        const playerCharacter = await PlayerCharacter.findByIdAndUpdate(req.body._id, req.body, {
             new: true,
         });
         if (!playerCharacter) return res.status(404).json({ error: "Could not find PlayerCharacter by ID: " + req.params.id });
