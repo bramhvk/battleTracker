@@ -6,6 +6,7 @@ import {GenericInfoBlock} from "../../components/shared/5e/GenericInfoBlock";
 import {useLocation, useNavigate} from "react-router-dom";
 import Button from "@mui/material/Button";
 import {isStringNotEmpty} from "../../utils/validation";
+import {SensesBlock} from "../../components/shared/5e/Senses";
 
 
 const MonsterEdit: React.FC = () => {
@@ -40,6 +41,7 @@ const MonsterEdit: React.FC = () => {
             {JSON.stringify(data)}
             <GenericInfoBlock data={data.info} onChange={updated => setData({...data, info: updated})}/>
             <StatBlock data={data.stats} onChange={updated => setData({...data, stats: updated})}/>
+            <SensesBlock data={data.senses} onChange={updated => setData({...data, senses: updated})}/>
             <Button onClick={saveMonster}>Save</Button>
         </>
     );

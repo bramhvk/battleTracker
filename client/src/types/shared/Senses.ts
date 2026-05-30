@@ -1,4 +1,4 @@
-export const sensesKeys = ["perception", "darkvision", "blindsight", "tremorsense", "truesight"] as const;
+export const sensesKeys: Array<keyof Senses> = ["perception", "darkvision", "blindsight", "tremorsense", "truesight"];
 
 export interface Senses {
     perception?: number;
@@ -8,7 +8,7 @@ export interface Senses {
     truesight?: number;
 }
 
-export const emptySenses = {
+export const emptySenses: Senses = {
     perception: 0,
     darkvision: 0,
     blindsight: 0,

@@ -1,6 +1,5 @@
-import {useEffect, useState} from "react";
-import {FormControl, FormLabel, Input} from "@mui/material";
-import {emptyStats, Stats} from "../../../types/shared/Stats";
+import {statKeys, Stats} from "../../../types/shared/Stats";
+import {NumberInput} from "../NumberInput";
 
 interface StatBlockProps {
     data: Stats;
@@ -10,43 +9,11 @@ interface StatBlockProps {
 
 const StatBlock: React.FC<StatBlockProps> = ({data, onChange}) => {
 
-    const [stats, setStats] = useState(emptyStats)
-
-    // set the data on page load
-    useEffect(() => {
-        setStats(data);
-    }, [data])
-
-    const handleChange = (key: keyof Stats, value: number) => {
-        onChange({...data, [key]: value});
-    }
-
     return (
         <div>
-            <FormControl>
-                <FormLabel>STR</FormLabel>
-                <Input placeholder="STR" value={stats.str} type={"number"} onChange={(e) => handleChange("str", Number(e.target.value))} />
-            </FormControl>
-            <FormControl>
-                <FormLabel>DEX</FormLabel>
-                <Input placeholder="DEX" value={stats.dex} type={"number"} onChange={(e) => handleChange("dex", Number(e.target.value))}/>
-            </FormControl>
-            <FormControl>
-                <FormLabel>CON</FormLabel>
-                <Input placeholder="CON" value={stats.con} type={"number"} onChange={(e) => handleChange("con", Number(e.target.value))}/>
-            </FormControl>
-            <FormControl>
-                <FormLabel>INT</FormLabel>
-                <Input placeholder="INT" value={stats.int} type={"number"} onChange={(e) => handleChange("int", Number(e.target.value))}/>
-            </FormControl>
-            <FormControl>
-                <FormLabel>WIS</FormLabel>
-                <Input placeholder="WIS" value={stats.wis} type={"number"} onChange={(e) => handleChange("wis", Number(e.target.value))}/>
-            </FormControl>
-            <FormControl>
-                <FormLabel>CHA</FormLabel>
-                <Input placeholder="CHA" value={stats.cha} type={"number"} onChange={(e) => handleChange("cha", Number(e.target.value))}/>
-            </FormControl>
+            {statKeys.map((keyName) => (
+                <NumberInput label={keyName} keyName={keyName} data={data} onChange={onChange} />
+            ))}
         </div>
     );
 }
